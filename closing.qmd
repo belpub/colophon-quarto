@@ -1,0 +1,19 @@
+# About Your Organization {.unnumbered}
+
+Captioned images work fine here — this logo is a real, working example. It's excluded from the List of Figures automatically (see `preamble.tex`'s "LIST OF FIGURES / LIST OF TABLES — CHAPTERS ONLY" section for how); nothing special needed in this file itself.
+
+![Your organization's logo.](logo-placeholder.png){width=192px fig-align=center fig-alt="Your organization's logo"}
+
+\vspace{12pt}
+
+A short paragraph about your organization goes here — mission, background, what you do.
+
+*Add your organization's bio copy here — mission, accreditation notes, program history, whatever belongs on this page.*
+
+{{< pagebreak >}}
+
+# Thank You {.unnumbered}
+
+Thank you for reading. We hope this book serves you well.
+
+*Add closing notes, contact details, or next-step guidance here.*

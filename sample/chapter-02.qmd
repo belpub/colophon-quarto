@@ -1,0 +1,55 @@
+# The Expansion Decision
+
+Meridian's board approved the EV expansion in early 2022. Figure 2.1
+shows the sequence that followed — generated with Graphviz and
+embedded as a normal figure, exactly as this toolkit recommends for
+diagrams (see the main README's "Diagrams" section for why native
+Quarto diagram rendering is deliberately avoided here).
+
+![The sequence Meridian followed after approving its EV expansion.](figures/expansion-timeline.png){#fig-timeline width="90%" fig-alt="A left-to-right flow diagram: core business stable, leads to expansion approved, leads to EV unit launched, leads to core business neglected, leads to both units underperform."}
+
+Widening the comparison across all three of Meridian's business
+lines — including the food-delivery pilot it had also launched —
+needs more horizontal room than a portrait page comfortably allows.
+This is exactly the case this toolkit's landscape-page support
+exists for.
+
+```{=latex}
+\begin{landscape}
+\giLandscapeHeader
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{0.16\linewidth}
+  >{\raggedright\arraybackslash}p{0.14\linewidth}
+  >{\raggedright\arraybackslash}p{0.18\linewidth}
+  >{\raggedright\arraybackslash}p{0.16\linewidth}
+  >{\raggedright\arraybackslash}p{0.16\linewidth}
+  >{\raggedright\arraybackslash}p{0.16\linewidth}
+@{}}
+\toprule\noalign{}
+\rowcolor{giTableHeaderShade}
+\textbf{Business line} & \textbf{Launched} & \textbf{Capital committed} & \textbf{Named owner} & \textbf{2022 status} & \textbf{2023 status} \\
+\midrule\noalign{}
+\endhead
+\cellcolor{giTableFirstColShade}Core ride-hailing & 2018 & Self-funding & Head of Operations & Profitable & Declining share \\
+\arrayrulecolor{giTableDivider}\hline
+\cellcolor{giTableFirstColShade}EV manufacturing & 2022 & \$400M & Rotating, no single owner & Pre-launch & Delayed, over budget \\
+\arrayrulecolor{giTableDivider}\hline
+\cellcolor{giTableFirstColShade}Food delivery pilot & 2021 & \$40M & Head of Operations (dual role) & Stalled & Quietly discontinued \\
+\bottomrule
+\caption{\label{tbl-three-lines}Meridian's three concurrent business lines, one year into the expansion.}
+\end{longtable}
+
+\giLandscapeFooter
+\end{landscape}
+```
+
+The Head of Operations holding both the core business and the
+food-delivery pilot — visible in Table 2.1 — is the kind of detail
+easy to miss in a narrative summary and hard to miss in a table:
+the same finding [@demo2021founder] shows up here as a structural
+fact, not an opinion.
+
+```{=latex}
+\giEnableAppendix
+```

@@ -1,0 +1,75 @@
+project:
+  type: book
+
+bibliography: references.bib   # citation source — see references.qmd
+                                # for where the reference list itself
+                                # actually gets printed.
+csl: apa.csl                   # citation/reference formatting style —
+                                # APA 7th edition, a sensible default
+                                # for most professional/practitioner
+                                # course content. See README's
+                                # "Citation style" section for why,
+                                # and how to swap it for a different
+                                # style if a specific book needs one.
+
+book:
+  chapters:
+    - index.qmd             # required by Quarto as the book's home page —
+                             # doubles as the Copyright page so the
+                             # mandatory slot isn't wasted on a blank page.
+                             # The actual title page is injected via
+                             # title-page.tex (include-before-body below),
+                             # outside the chapter-file model, so it isn't
+                             # wrapped in a \chapter and doesn't force an
+                             # extra blank page ahead of it.
+    - preface.qmd
+    - contents.qmd          # explicit TOC placement — after Preface
+    - introduction.qmd     # mainmatter switch happens at end of contents.qmd
+    - chapter-01.qmd
+    - chapter-02.qmd
+    - references.qmd        # bibliography — see the file itself for
+                             # how citations resolve here from .bib
+    - closing.qmd           # back matter — organization bio + thank-you
+                             # pages, both unnumbered. Add more here
+                             # the same way (glossary, index, etc.).
+
+
+format:
+  pdf:
+    pdf-engine: xelatex
+    documentclass: book
+    classoption: [oneside]
+    papersize: a4
+    geometry: "a4paper, margin=2cm"
+    toc: false   # disabled: auto-TOC inserts too early. We place
+                 # \tableofcontents manually in contents.qmd instead,
+                 # exactly where it belongs — after Preface, before
+                 # the Introduction.
+    number-sections: true
+    fig-pos: "H"   # forces every figure to render exactly where it
+                   # appears in the source, instead of LaTeX's default
+                   # floating behavior (which can legitimately drift a
+                   # figure many paragraphs — even sections — away
+                   # from where it's written). Confirmed as a real,
+                   # necessary fix, not a redundant safety net: without
+                   # this, Quarto does NOT add [H] placement to figures
+                   # by default in this book/xelatex setup, despite
+                   # earlier (incorrect, since corrected) documentation
+                   # in this project claiming otherwise — that
+                   # conclusion was based on checking only a few
+                   # figures in a longer document, not all of them.
+    include-in-header:
+      - brand.tex                # brand identity: colors, fonts, book
+                                  # title. Swap this file to reuse the
+                                  # toolkit for a different brand —
+                                  # must load BEFORE preamble.tex.
+      - preamble.tex              # production engine — brand-agnostic,
+                                  # shouldn't need to change per course
+                                  # or per brand.
+      - title-page-content.tex   # edit THIS for title-page text —
+                                  # see the comments inside it. It's
+                                  # loaded before title-page.tex below
+                                  # so its variables are ready to use.
+    keep-tex: true
+    include-before-body:
+      - title-page.tex

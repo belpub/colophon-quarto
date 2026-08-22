@@ -1,0 +1,34 @@
+project:
+  type: book
+
+bibliography: references.bib
+csl: apa.csl
+
+book:
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - contents.qmd
+    - introduction.qmd
+    - chapter-01.qmd
+    - chapter-02.qmd
+    - appendix-a.qmd
+    - references.qmd
+    - closing.qmd
+
+format:
+  pdf:
+    pdf-engine: xelatex
+    documentclass: book
+    classoption: [oneside]
+    papersize: a4
+    geometry: "a4paper, margin=2cm"
+    toc: false
+    number-sections: true
+    fig-pos: "H"
+    include-in-header:
+      - brand.tex
+      - preamble.tex
+      - title-page-content.tex
+    include-before-body:
+      - title-page.tex

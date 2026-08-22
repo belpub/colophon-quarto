@@ -1,0 +1,99 @@
+% ============================================================
+% brand.tex — PLACEHOLDER brand identity (generic starting point)
+% ============================================================
+% Everything in THIS file is what makes a rendered book look like a
+% specific brand: colors, fonts, and the book title used in the
+% running header. preamble.tex (loaded after this file) is the
+% structural engine — page layout, table mechanics, front/back
+% matter switching, landscape handling — and doesn't change between
+% brands or between books. This is the ONE file you need to edit to
+% adapt this toolkit to a real company's brand; everything else in
+% the project should work unmodified.
+%
+% Load order matters: this file must be listed BEFORE preamble.tex
+% in _quarto.yml's `include-in-header:` list, since preamble.tex
+% references the colors and \giBookTitle defined here.
+%
+% Every value below is a generic placeholder — swap them for the
+% real brand's palette and typefaces. Search/replace the `gi` prefix
+% on the color and macro names if you want to rename this toolkit's
+% naming convention entirely (it's just a naming convention, not a
+% requirement — the engine in preamble.tex references these exact
+% names, so if you rename them, update preamble.tex's references too).
+% ============================================================
+
+\usepackage{fontspec}
+\usepackage[table]{xcolor}
+
+% ============================================================
+% FONTS
+% This starting point uses TeX Gyre Termes (body) + TeX Gyre Heros
+% (headings) — professional, freely-licensed faces that ship with
+% every standard TeX/TinyTeX install, so this toolkit renders with
+% ZERO extra setup, on any machine, with no font files to source or
+% bundle. Swap in a real brand's custom fonts when you have them:
+%
+%   1. Put the static-weight .ttf/.otf files in a fonts/ folder
+%      (Regular, Bold, Italic, Bold Italic — variable-font files
+%      don't work reliably with LaTeX's font engine).
+%   2. Replace the two blocks below with this pattern:
+%        \setmainfont{YourBodyFont}[Path=fonts/, Extension=.ttf, ...]
+%        \newfontfamily\headingfont{YourHeadingFont}[Path=fonts/, ...]
+%      Match the font FAMILY name you pass here to your files'
+%      basename exactly (e.g. family "YourBodyFont" needs files
+%      named YourBodyFont-Regular.ttf, not "Your Body Font-Regular")
+%      — a mismatch here is a real, easy-to-hit error.
+% ============================================================
+\setmainfont{TeX Gyre Termes}
+
+\newfontfamily\headingfont{TeX Gyre Heros}[Mapping = tex-text]
+% Without Mapping=tex-text, chapter/section titles show a literal
+% "---" instead of an em dash (—), and "--" instead of an en dash
+% (–), even though body text renders them correctly. fontspec
+% applies this dash/quote-conversion mapping automatically for
+% \setmainfont (above) but NOT automatically for \newfontfamily-
+% loaded fonts like this one — has to be requested explicitly here
+% to match. Keep this option if you swap in a real brand's custom
+% heading font later.
+
+% ============================================================
+% COLOR PALETTE — placeholder
+% Define once, reuse everywhere — the equivalent of :root { --var } in CSS.
+% Replace every hex value below with the real brand's palette.
+% ============================================================
+\definecolor{giPrimary}{HTML}{1E3A5F}      % primary heading / UI color
+\definecolor{giPrimaryTint}{HTML}{E4EAF1}  % primary +90% — table header bg
+\definecolor{giSecondary}{HTML}{4A4A68}    % secondary accent color
+\definecolor{giCrimson}{HTML}{A6303F}      % core brand accent — titles, rules
+\definecolor{giCrimsonTint}{HTML}{F7E5E7}  % accent +90% — subtle accent bg
+\definecolor{giInk}{HTML}{1A1A1A}          % body text color
+\definecolor{giWarning}{HTML}{E0954E}      % medium-risk / caution (data tables)
+\definecolor{giWarningTint}{HTML}{FCF1E6}  % warning +90%
+\definecolor{giNeutralWarm}{HTML}{B8B0A6}  % muted UI elements
+\definecolor{giNeutralGray}{HTML}{DADCDC}  % borders/dividers
+\definecolor{giBgTint}{HTML}{F1F3F7}       % near-white — alt row bg
+\definecolor{giSuccess}{HTML}{3A9E82}      % low-risk / positive
+\definecolor{giAccent}{HTML}{2A4FD6}       % links, highlights
+
+% ---- Semantic alias: giCrimson doubles as the risk-table "danger" color ----
+\colorlet{giDanger}{giCrimson}
+\colorlet{giDangerTint}{giCrimsonTint}
+
+% ---- Convenience aliases used elsewhere in this file ----
+\colorlet{tableHeaderBg}{giPrimaryTint}
+\colorlet{tableAltRow}{giBgTint}
+
+% ---- Table shading (header / first column / alternating rows) ----
+\definecolor{giTableHeaderShade}{HTML}{EAEAEC}   % table header row background
+\definecolor{giTableFirstColShade}{HTML}{E9E9F0} % first-column background
+\definecolor{giTableAltRowShade}{HTML}{F3F3F5}   % alternating body-row background
+\definecolor{giTableDivider}{HTML}{DFE1E1}       % hairline row-divider color
+
+% ============================================================
+% BOOK TITLE — used in the running header (alternates with the
+% current chapter name — see preamble.tex). This is the SERIES/
+% PUBLICATION title, not the specific book's title — that lives in
+% title-page-content.tex instead, since it'd change per book while
+% this stays constant across a whole catalog/series.
+% ============================================================
+\newcommand{\giBookTitle}{Scaling Before Stability — Colophon Sample}

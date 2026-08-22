@@ -1,0 +1,8 @@
+# Preface {.unnumbered}
+
+This short book exists to demonstrate the Colophon toolkit's
+features end to end — not to teach business strategy. The case
+study is entirely fictional; the point is to show what a finished
+chapter, table, figure, appendix, and citation actually look like
+once rendered, so you can compare this file's Markdown source
+directly against the PDF it produces.

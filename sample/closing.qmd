@@ -1,0 +1,23 @@
+# About This Sample {.unnumbered}
+
+This short book is sample content shipped with the Colophon toolkit
+— not a real business case study. Every chapter, table, figure, and
+citation mechanism it demonstrates is documented in full in the main
+toolkit's README and `docs/BOOK-CREATION-GUIDE.md`.
+
+![The Colophon toolkit's placeholder logo — swap this file for a real one when building your own book.](logo-placeholder.png){width=192px fig-align=center fig-alt="A placeholder logo box."}
+
+\vspace{12pt}
+
+To use this sample as a starting point for your own book: copy this
+`sample/` folder out on its own, replace the fictional content in
+each chapter with your own, and update `brand.tex` and
+`title-page-content.tex` with your real title, colors, and fonts.
+
+{{< pagebreak >}}
+
+# Thank You {.unnumbered}
+
+Thanks for trying Colophon. If something in this sample didn't
+render the way this page describes, that's a real bug worth
+reporting — see `CONTRIBUTING.md` in the main toolkit.

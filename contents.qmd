@@ -1,0 +1,27 @@
+# Table of Contents {.unnumbered .unlisted}
+
+```{=latex}
+% Using \@starttoc{toc} instead of \tableofcontents: the latter
+% would print its own internal \chapter*{Contents} heading on top
+% of the Markdown heading above, producing a second, blank
+% chapter-opening page. \@starttoc{toc} just dumps the entries.
+\makeatletter
+\@starttoc{toc}
+\makeatother
+```
+
+```{=latex}
+% List of Tables and List of Figures, in raw LaTeX rather than
+% Markdown headings — \giOptionalTOCList (defined in preamble.tex)
+% checks whether each one actually has any entries first, and prints
+% nothing at all (no heading, no page) if not. See preamble.tex's
+% "OPTIONAL LIST OF TABLES / LIST OF FIGURES" section for the full
+% explanation of why this can't be done with a Markdown heading.
+\giOptionalTOCList{lot}{List of Tables}
+\giOptionalTOCList{lof}{List of Figures}
+```
+
+```{=latex}
+\giMarkFrontMatterEnd
+\giEnableMainMatter
+```

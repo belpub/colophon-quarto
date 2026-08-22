@@ -1,0 +1,11 @@
+# Copyright {.unnumbered}
+
+© 2026 Colophon Sample Content. This sample book is provided as
+part of the Colophon toolkit to demonstrate its features, and may
+be freely copied, modified, and reused under the same MIT license
+covering the toolkit itself.
+
+The company, people, and events described in this book are entirely
+fictional, invented solely to demonstrate the toolkit's chapter,
+table, figure, and citation features. Any resemblance to a real
+organization is coincidental.
