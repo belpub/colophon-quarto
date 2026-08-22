@@ -1,0 +1,40 @@
+# Meridian Mobility: A Growth Story
+
+Meridian Mobility launched in 2018 as a ride-hailing service in a
+handful of mid-sized cities. Its early growth was fast and, for the
+first three years, disciplined: expansion followed demand, not the
+other way around, and the company reached operating breakeven in
+its core market by year three — a milestone few competitors in the
+sector managed on a comparable timeline [@demo2020scaling].
+
+By 2021, Meridian's leadership team faced a choice common to
+fast-growing platform companies: keep deepening the core ride-hailing
+business, or use its funding momentum to move into an adjacent,
+capital-intensive market. Table 1.1 summarizes the position each
+option started from.
+
+```{=latex}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{0.3\linewidth}
+  >{\raggedright\arraybackslash}p{0.32\linewidth}
+  >{\raggedright\arraybackslash}p{0.28\linewidth}
+@{}}
+\toprule\noalign{}
+\rowcolor{giTableHeaderShade}
+\textbf{Metric} & \textbf{Core ride-hailing} & \textbf{Proposed EV expansion} \\
+\midrule\noalign{}
+\endhead
+\cellcolor{giTableFirstColShade}Market maturity & Established, profitable & Unproven, capital-intensive \\
+\arrayrulecolor{giTableDivider}\hline
+\cellcolor{giTableFirstColShade}Operational track record & 3 years, stable & None \\
+\arrayrulecolor{giTableDivider}\hline
+\cellcolor{giTableFirstColShade}Leadership domain experience & Deep & Limited \\
+\bottomrule
+\caption{\label{tbl-position}Meridian's starting position in each business line, 2021.}
+\end{longtable}
+```
+
+The pattern this book uses Meridian to illustrate — a stable core
+business set aside in favor of a harder, unproven one — recurs often
+enough in platform-company case studies to be treated as a distinct
+failure mode, not a one-off [@christensen2019innovation].

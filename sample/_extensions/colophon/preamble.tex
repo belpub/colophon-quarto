@@ -1,0 +1,519 @@
+% ============================================================
+% preamble.tex — book-production ENGINE (brand-agnostic)
+% ============================================================
+% Everything in this file is structural: page layout, table
+% mechanics, front/main/back-matter page-numbering control,
+% landscape-page handling, header/footer behavior. None of it is
+% specific to any one brand or course — it's meant to
+% be reused unmodified across every book built on this toolkit.
+%
+% Colors, fonts, and the book title are NOT defined here — they live
+% in brand.tex, loaded before this file (see _quarto.yml's
+% `include-in-header:` order). This file references color/font names
+% (giPrimary, \headingfont, \giBookTitle, etc.) that brand.tex is
+% responsible for defining. If you're adapting this toolkit for a
+% different brand, brand.tex is what you replace — this file
+% shouldn't need to change.
+% ============================================================
+
+% ---- Layout essentials (images, landscape pages) ----
+\usepackage{graphicx}
+\usepackage{pdflscape}
+
+% ============================================================
+% HEADING STYLES (the h1/h2/h3 rules of the LaTeX world)
+% ============================================================
+\usepackage{titlesec}
+% \raggedright on the title text (both here and in the 4th
+% argument below) prevents a real, confirmed typesetting defect: a
+% long chapter title that wraps to two lines otherwise gets fully
+% JUSTIFIED at \Huge size — LaTeX's default paragraph behavior — and
+% stretching a handful of huge words to exactly fill a line's width
+% produces visibly uneven, overly wide gaps between words on the
+% wrapped line. Reproduced directly with a real long title
+% ("Dissecting Twelve Unique Security Failures and Governance Layers
+% Across a Decade") and confirmed \raggedright fixes it with zero
+% effect on short, single-line titles. Parts (below) don't need this
+% same fix — \centering, which they already use, doesn't stretch
+% inter-word spacing the way justification does.
+\titleformat{\chapter}[display]
+  {\headingfont\Huge\bfseries\color{giPrimary}\raggedright}
+  {\chaptertitlename\ \thechapter}{20pt}{\Huge\raggedright}
+  [\color{giCrimson}\titlerule]
+% Parts sit one level above chapters — their own divider page, larger
+% and centered, distinct from a chapter opening rather than just a
+% bigger version of one. \thepart defaults to roman numerals (Part
+% I, Part II); switch to \arabic{part} in this block if you'd rather
+% have "Part 1, Part 2." Only relevant if you use `part:` entries in
+% _quarto.yml's chapters: list — harmless and inert if you don't; see
+% README's "Parts" section for the full syntax and behavior.
+%
+% \titleclass{\part}{top} switches \part from titlesec's default
+% "page" class to "top" (the same class \chapter uses) BEFORE
+% \titleformat/\titlespacing configure its appearance below. This
+% matters because titlesec fully replaces LaTeX's own \part command
+% with its own \ttl@pageclass mechanism — the kernel's \@endpart
+% (which normally forces a fresh page after every part title, even
+% with nothing else on the page) is never even called once titlesec
+% is loaded, so redefining \@endpart directly has no effect; titlesec
+% controls this via its own page classification instead, and "page"
+% class is what forces that automatic post-title page break. "top"
+% still starts the part on its own fresh page (same as \chapter
+% does) but doesn't force whatever follows onto a SEPARATE page —
+% needed so a short part-overview paragraph placed right after a
+% `# Part Title` heading lands on the same page as the title instead
+% of being stranded alone on an otherwise-blank page.
+\titleclass{\part}{top}
+\titleformat{\part}[display]
+  {\centering\headingfont\Large\bfseries\color{giCrimson}}
+  {\partname\ \thepart}{16pt}{\huge\color{giPrimary}}
+  [\color{giCrimson}\titlerule]
+\titlespacing*{\part}{0pt}{80pt}{60pt}
+\titleformat{\section}
+  {\headingfont\Large\bfseries\color{giPrimary}}{\thesection}{1em}{}
+\titleformat{\subsection}
+  {\headingfont\large\bfseries\color{giSecondary}}{\thesubsection}{1em}{}
+\titlespacing*{\chapter}{0pt}{0pt}{20pt}
+\titlespacing*{\section}{0pt}{18pt}{6pt}
+
+% ---- Body text color ----
+% \AtBeginDocument defers this until the full preamble has loaded —
+% needed specifically for the Quarto-extension packaging (see
+% "Installing via Quarto extension" in the main README), where this
+% file loads BEFORE brand.tex (the extension mechanism forces that
+% order, the opposite of what a plain include-in-header list would
+% do) — so \color{giInk} would otherwise fire before giInk is even
+% defined. Confirmed via an actual render, not assumed.
+\AtBeginDocument{\color{giInk}}
+
+% ---- Body text spacing ----
+\usepackage{setspace}
+\setstretch{1.15}   % line-height equivalent
+
+% ============================================================
+% FRONT/MAIN MATTER CONTROL
+% Pandoc's book template unconditionally inserts its own \mainmatter
+% immediately before the "chapters:" content begins (i.e. right
+% before Copyright), regardless of any \frontmatter the user places
+% around it. That silently forces arabic numbering on Copyright/
+% Preface/TOC. We neutralize that one automatic call and expose our
+% own \giEnableMainMatter switch, fired explicitly once — at the end
+% of contents.qmd, right before the Introduction chapter — which is
+% the only place \mainmatter should actually take effect.
+% ============================================================
+\makeatletter
+\newif\ifgi@realmainmatter
+\gi@realmainmatterfalse
+\let\gi@origmainmatter\mainmatter
+\renewcommand{\mainmatter}{%
+  \ifgi@realmainmatter\gi@origmainmatter\fi
+}
+\newcommand{\giEnableMainMatter}{\gi@realmainmattertrue\mainmatter\gi@inchapterstrue}
+
+% Records the roman page count reached at the end of front matter
+% (the TOC page), so back matter can resume roman numbering from
+% there — e.g. front matter ends at "iii", back matter picks up at
+% "iv" — rather than restarting at "i" and producing two different
+% pages both labeled "i" in the same document.
+\newcounter{giFrontMatterLastPage}
+\newcommand{\giMarkFrontMatterEnd}{\setcounter{giFrontMatterLastPage}{\value{page}}}
+\newcommand{\giEnableBackMatter}{%
+  \backmatter
+  \pagenumbering{roman}%
+  \setcounter{page}{\numexpr\value{giFrontMatterLastPage}+1\relax}%
+  \gi@inchaptersfalse
+}
+
+% ============================================================
+% APPENDICES
+% \giEnableAppendix switches from numbered chapters (Chapter 1, 2,
+% 3...) to lettered appendices (Appendix A, B, C...) — LaTeX's
+% standard \appendix mechanism, called at the point in the book where
+% appendices should start (after the last numbered chapter, before
+% the first appendix — same "must fire at the end of the PREVIOUS
+% file" placement rule as \giEnableMainMatter/\giEnableBackMatter
+% elsewhere in this project, since Quarto moves raw LaTeX found
+% before a heading to after it).
+%
+% This needed surprisingly little custom code — confirmed by actually
+% building and testing a 3-appendix example (including one using
+% \giLandscapeChapterOpener, since landscape content is common in
+% appendices) rather than assuming it would just work:
+%   - Chapter titles automatically show "Appendix A" instead of
+%     "Chapter 3" — no changes needed to \titleformat{\chapter} or
+%     \giLandscapeChapterHeader, since both already reference
+%     \chaptertitlename (a standard LaTeX kernel command that tracks
+%     appendix mode on its own) rather than hardcoding "Chapter".
+%   - Table/figure numbering automatically follows suit ("Table A.1",
+%     "Figure B.1"), since it derives from \thechapter, which
+%     \appendix redefines to use letters instead of digits.
+%   - The List of Tables/Figures "chapters only" gate
+%     (\ifgi@inchapters, see below) is UNCHANGED by \giEnableAppendix
+%     on purpose — appendix content should still count for those
+%     lists, exactly like a regular numbered chapter does, and it
+%     already does automatically since nothing about the gate itself
+%     is tied to whether \c@chapter is numeric or lettered.
+%   - Page numbering is untouched by \appendix itself (stays arabic,
+%     continuing the same sequence as the preceding chapters) —
+%     \giEnableBackMatter afterward is what switches to roman for the
+%     back matter that follows the appendices, exactly as it already
+%     did before appendices existed.
+%
+% Usage — at the end of the last numbered chapter's file:
+%   ```{=latex}
+%   \giEnableAppendix
+%   ```
+% Then write each appendix like a normal chapter (or, for a
+% landscape-only appendix, using \giLandscapeChapterOpener exactly as
+% documented above) — no other syntax changes needed. Move
+% \giEnableBackMatter to the end of the LAST appendix file instead of
+% the last numbered chapter, since back matter now follows the
+% appendices instead of following the chapters directly.
+% ============================================================
+\newcommand{\giEnableAppendix}{%
+  \appendix
+}
+
+% ============================================================
+% LIST OF FIGURES / LIST OF TABLES — CHAPTERS ONLY, ENFORCED
+% Pandoc treats any standalone Markdown image with alt text as a
+% captioned figure by default — so a completely normal-looking image
+% insertion in a front- or back-matter file (a logo on the "About"
+% page, say) silently ends up in the List of Figures too, since nothing
+% about \caption{} itself knows or cares what part of the book it's
+% in. Relying on "just don't caption images outside chapters" as a
+% writing convention is too easy to violate by accident (real
+% incident: an ordinary ![...](...) image on a back-matter page did
+% exactly this). Fixed here at the mechanism level instead: \giEnableMainMatter
+% flips \ifgi@inchapters on, \giEnableBackMatter flips it back off, and
+% \addcontentsline is wrapped (further down, AFTER hyperref — see the
+% comment there for why the order matters) so lof/lot entries are
+% silently dropped whenever that flag is off — regardless of how the
+% image or table got captioned. Front/back matter can caption images
+% and tables freely now; they just won't appear in the List of
+% Figures/Tables. Everything else (\addcontentsline{toc}{...} for
+% chapter/section headings, etc.) passes through untouched.
+% ============================================================
+\newif\ifgi@inchapters
+\gi@inchaptersfalse
+\makeatother
+
+% ---- Link colors ----
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=giAccent,
+  urlcolor=giAccent
+}
+
+% This must come AFTER \usepackage{hyperref}, deferred via
+% \AtBeginDocument AND re-applied via \AddToHook{package/caption/after}
+% — belt and suspenders, because Quarto/Pandoc loads the `caption`
+% package LAZILY (only at the first table/figure that actually needs
+% it, wherever that falls in the document), and that package fully
+% takes over \caption's internals — including, it turns out, keeping
+% its own internal reference to whatever \addcontentsline looked like
+% when IT loaded, rather than deferring to whatever the command
+% currently means. That makes patching \addcontentsline itself a dead
+% end: it compiles cleanly and silently does nothing, because
+% `caption`'s own internal figure/table-caption code path never
+% actually calls the patched version. \AddToHook{package/caption/after}
+% is the LaTeX kernel's built-in mechanism for "run this code
+% immediately after package X finishes loading, no matter when that
+% turns out to be" — used here to patch \caption itself instead, once
+% `caption` package's own version of it is the thing in effect.
+%
+% The actual technique: \caption[<short>]{<full>} is the standard,
+% universally-supported LaTeX idiom where the OPTIONAL argument
+% controls the .lof/.lot entry and the mandatory argument controls
+% what's shown on the page — they're independent. Passing an EMPTY
+% optional argument (\caption[]{...}) keeps the full caption visible
+% on the page while adding nothing to the list. So this rewrites
+% \caption{text} into \caption[]{text} whenever \ifgi@inchapters is
+% false — outside a chapter's content, figures/tables keep their
+% on-page caption (still numbered, since the underlying figure/table
+% counter is a single global sequence LaTeX doesn't reset between
+% front/main/back matter — a real but minor cosmetic wrinkle, not a
+% correctness issue) but are correctly excluded from the List of
+% Figures/Tables either way. This project's tables/figures only ever
+% use the plain single-argument \caption{text} form (never a manual
+% custom short caption via \caption[short]{text}), so that's the only
+% form this gate needs to handle — it isn't meant to support the two-argument
+% form.
+\makeatletter
+\newif\ifgi@captionpatched
+\gi@captionpatchedfalse
+\newcommand{\gi@patchcaption}{%
+  \ifgi@captionpatched\else
+    \gi@captionpatchedtrue
+    \let\gi@origcaption\caption
+  \fi
+  \renewcommand{\caption}[1]{%
+    \ifgi@inchapters
+      \gi@origcaption{##1}%
+    \else
+      \gi@origcaption[]{##1}%
+    \fi
+  }%
+}
+\AtBeginDocument{\gi@patchcaption}
+\AddToHook{package/caption/after}{\gi@patchcaption}
+\makeatother
+
+% ============================================================
+% HEADER / FOOTER
+% One item per header line — alternating between the book title and
+% the current chapter name by page — instead of both simultaneously
+% at left+right. Two items sharing a line risks visual collision or
+% an awkward wrap when either title is long; alternating keeps each
+% header line short and gives the book title equal visibility to the
+% chapter name across the book, without doubling up.
+%
+% Chapter-opening pages intentionally get NO header (LaTeX's default
+% \pagestyle{plain} — page number only): the big chapter title
+% directly below already states what page you're on, so repeating it
+% in a header on the same page is redundant.
+% ============================================================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+% Wrapped in a fixed-width, right-aligned box so a long chapter name
+% or title wraps to a second line instead of overflowing the margin
+% or colliding with anything else (nothing else occupies this line).
+\setlength{\headheight}{27pt}
+\fancyhead[R]{%
+  \parbox[b]{0.85\textwidth}{\raggedleft\small\headingfont\color{giSecondary}%
+  \ifodd\value{page}\leftmark\else\giBookTitle\fi}%
+}
+\fancyfoot[C]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================
+% TABLE STYLING
+% ============================================================
+\usepackage{booktabs}
+\usepackage{array}
+\setlength{\arrayrulewidth}{0.6pt}   % border thickness
+\renewcommand{\arraystretch}{1.3}    % row height / cell padding
+
+% Pandoc renders every Markdown table (including narrow ones) inside
+% a `longtable`, which centers itself on the page by default — not
+% the standard convention for body-text tables. Left-align instead,
+% flush with the surrounding paragraph text (professional norm; also
+% matches how the images/headings in this template are set).
+\setlength\LTleft{0pt}
+\setlength\LTright{0pt plus 1fil}
+
+% Usage in a chapter file, right before a table:
+%   \rowcolors{2}{tableAltRow}{white}   <- zebra-stripes body rows,
+%                                           leaves the header row plain
+%                                           (distinguished by booktabs
+%                                           rules above/below it)
+%
+% Note: per-row \rowcolor commands only work inside hand-written raw
+% LaTeX tables — Pandoc's auto-generated tables (from Markdown pipe
+% syntax) don't expose a hook to color just the header row. If you
+% need a shaded header specifically, that table needs to be written
+% as raw LaTeX rather than a Markdown table — ask if you hit this.
+% See chapter-01.qmd's landscape example for a full worked version
+% with header/first-column/alternating-row shading combined.
+
+% ============================================================
+% LANDSCAPE PAGE HEADER / FOOTER
+% pdflscape rotates the *body* content of a `landscape` block so it
+% displays right-way-up, but it has no effect on \fancyhead/\fancyfoot
+% — those are drawn against the physical (portrait) page edges, so on
+% a landscape page they end up rotated sideways along the margin.
+% Fix: don't use fancyhdr's per-page hooks on landscape pages at all.
+% Suppress them (\thispagestyle{empty}) and instead print a matching
+% header/footer line as ordinary content, inside the `landscape`
+% block itself — so it's part of the same rotated box as the table
+% and reads normally horizontal, top and bottom of the page, exactly
+% like every portrait page.
+% ============================================================
+\newcommand{\giLandscapeHeader}{%
+  \thispagestyle{empty}%
+  {\small\headingfont\color{giSecondary}\leftmark\hfill\giBookTitle\par}%
+  \vspace{2pt}{\color{giCrimson}\hrule height 0.4pt}\vspace{10pt}%
+}
+\newcommand{\giLandscapeFooter}{%
+  \vfill\hfill{\small\thepage}\par
+}
+
+% ============================================================
+% LANDSCAPE-ONLY CHAPTER OPENER
+% A normal chapter (via a Markdown "# Heading") always produces its
+% own full portrait page: \clearpage, then the chapter title typeset
+% with \titleformat{\chapter}'s styling. That's fine when real
+% portrait content follows it on the same page — but if a chapter's
+% first (or only) content is a landscape table/figure, the normal
+% flow wastes an entire page: the portrait title page ends up nearly
+% blank (title only, nothing else fits before the landscape rotation
+% has to start its own page), and the actual content only begins on
+% the page after that.
+%
+% \giLandscapeChapterOpener{Title} is a drop-in replacement for the
+% Markdown heading, used ONLY for a chapter whose first content is
+% landscape — it does the same bookkeeping a normal \chapter does
+% (advances the chapter counter, adds the Table of Contents entry,
+% sets the running header text) but deliberately WITHOUT typesetting
+% a separate portrait title page. Pair it with
+% \giLandscapeChapterHeader (no arguments — it reuses the title
+% \giLandscapeChapterOpener already stored) INSIDE the landscape
+% block instead of the normal \giLandscapeHeader, so the chapter
+% title itself appears as part of the landscape page's own header,
+% horizontal, at the top — not as a separate page.
+%
+% Usage (raw LaTeX, not a Markdown heading — see chapter-01.qmd for
+% a full working example):
+%   ```{=latex}
+%   \giLandscapeChapterOpener{A Chapter That Is Only A Landscape Table}
+%   \begin{landscape}
+%   \giLandscapeChapterHeader
+%   ... table or figure ...
+%   \giLandscapeFooter
+%   \end{landscape}
+%   ```
+%
+% If the chapter has ANY portrait content before the landscape block
+% (even one paragraph), use a normal Markdown heading and
+% \giLandscapeHeader instead, exactly as documented elsewhere — this
+% pair is specifically for the landscape-content-only case.
+%
+% One more real thing this needed: a chapter's .qmd file with NO
+% Markdown heading at all (true for a landscape-only chapter, since
+% \giLandscapeChapterOpener replaces the heading with raw LaTeX)
+% makes Quarto auto-insert an empty \chapter{} of its own — the book
+% project model expects every chapter file to correspond to some
+% heading, and falls back to a blank one when it finds none. Left
+% alone, that produces exactly the wasted page this whole mechanism
+% exists to avoid (an entirely blank "Chapter N" page, worse than the
+% original problem since it has no title text at all), AND consumes
+% a chapter number \giLandscapeChapterOpener's own \refstepcounter
+% then increments past — which is why the very first test of this
+% showed "Chapter 2" for what should have been Chapter 1. Fixed by
+% making \chapter{} a complete no-op specifically when called with an
+% empty title — real chapters (any actual title text) are completely
+% unaffected; only Quarto's auto-inserted blank wrapper is silenced.
+\makeatletter
+\let\gi@origchapter\chapter
+% Naively \renewcommand{\chapter}[1]{...} was the actual bug here —
+% not just insufficient, but actively wrong. titlesec's real \chapter
+% supports a starred form (\chapter*{...}, used everywhere in this
+% project's own front/back matter — Copyright, Preface, Introduction,
+% etc.) via \@ifstar-style star-detection built into how \chapter
+% itself is defined. Overwriting \chapter with a plain, single-
+% mandatory-argument macro destroys that: LaTeX's undelimited-
+% argument grabbing takes whatever token comes right after the
+% command name, so \chapter*{Copyright} — a single bare "*" character
+% immediately following \chapter — had its "*" grabbed AS the
+% argument, leaving "{Copyright}" to fall through as ordinary text,
+% while the "*" (non-empty!) failed the empty-title check and got
+% passed to \gi@origchapter as an UNSTARRED call — silently
+% incrementing the chapter counter and mislabeling the title, for
+% EVERY starred chapter in front and back matter, not just the one
+% empty \chapter{} this was meant to catch. \@ifstar below restores
+% correct dispatch: a starred call goes straight through to the real
+% \chapter*, completely untouched by the empty-title logic, which
+% only ever applies to the plain, unstarred form.
+\renewcommand{\chapter}{\@ifstar{\gi@chapterstar}{\gi@chapternostar}}
+\newcommand{\gi@chapterstar}[1]{\gi@origchapter*{#1}}
+\newcommand{\gi@chapternostar}[1]{%
+  \def\gi@chaptertitletest{#1}%
+  \ifx\gi@chaptertitletest\@empty
+  \else
+    \gi@origchapter{#1}%
+  \fi
+}
+\newcommand{\giLandscapeChapterOpener}[1]{%
+  \clearpage
+  \refstepcounter{chapter}
+  \addcontentsline{toc}{chapter}{\protect\numberline{\thechapter}#1}%
+  \markboth{\MakeUppercase{#1}}{\MakeUppercase{#1}}%
+  \gdef\gi@landscapechaptertitle{#1}%
+}
+\newcommand{\giLandscapeChapterHeader}{%
+  \thispagestyle{empty}%
+  {\headingfont\Large\bfseries\color{giPrimary}%
+   \chaptertitlename\ \thechapter\quad \gi@landscapechaptertitle%
+   \hfill{\small\color{giSecondary}\giBookTitle}\par}%
+  \vspace{4pt}{\color{giCrimson}\hrule height 0.6pt}\vspace{10pt}%
+}
+\makeatother
+
+% ============================================================
+% OPTIONAL LIST OF TABLES / LIST OF FIGURES
+% A book with no captioned tables (or no captioned figures) shouldn't
+% show an empty "List of Tables"/"List of Figures" page with a
+% heading and nothing underneath it — that reads as broken, not as
+% "there's nothing here." \@starttoc{lot}/\@starttoc{lof} alone can't
+% do this: it doesn't know how many entries it's about to print until
+% it's already printing them, and a Markdown heading (as used for the
+% Table of Contents itself) forces its own chapter-opening page
+% *unconditionally*, before we'd have any chance to check.
+%
+% \giOptionalTOCList{ext}{heading text} checks whether the relevant
+% aux file (.lot or .lof) actually has at least one entry, and only
+% prints the chapter heading + adds it to the Table of Contents if
+% so. \@starttoc itself is always called unconditionally regardless —
+% it's what (re-)opens that extension's write stream for the rest of
+% the document, so table/figure captions later in the book have
+% somewhere to record themselves. Making that call conditional too
+% creates a permanent chicken-and-egg deadlock: a fresh build has no
+% .lot/.lof file yet, so the check always finds nothing the first
+% time, so \@starttoc never runs, so the write stream never opens, so
+% nothing is ever recorded, on any pass, ever. When there genuinely
+% are zero entries, \@starttoc silently produces no visible output on
+% its own (nothing to read back), so calling it unconditionally is
+% always safe.
+%
+% The "does it have entries" check reads the file back with
+% \contentsline and \addvspace — the only two commands a stock
+% .lot/.lof file contains — temporarily redefined to do nothing
+% except flip a flag, so nothing in the file actually executes.
+% \contentsline takes FOUR arguments here, not three: hyperref
+% patches it to add a PDF anchor-name argument once loaded (which it
+% always is here), and getting the arity wrong doesn't error — it
+% silently leaves that fourth {argument} as leftover text, typeset
+% literally on the page (hit exactly this: stray text like
+% "figure.caption.9" printing where it shouldn't). The redefinitions
+% are wrapped in their own local \makeatletter, separate from the one
+% around this whole macro's definition — catcodes apply at the moment
+% text is tokenized, not at macro-definition time, and the file's own
+% content (e.g. \addvspace{10\p@}) is only tokenized when
+% \InputIfFileExists actually reads it, much later, at this macro's
+% call site, by which point the definition-time \makeatletter no
+% longer applies unless it's re-established right here.
+%
+% (A per-caption counter, incremented from inside the \caption patch
+% above instead of reading the .lot/.lof file, was tried first and
+% abandoned: a raw-LaTeX table's \caption inside `longtable` doesn't
+% reliably invoke the same \caption that patch redefines — `caption`
+% package's `longtable` integration appears to bypass it — so table
+% captions were never counted no matter how the counter logic was
+% written. Reading the .lot/.lof file directly sidesteps this
+% entirely: it checks the actual *result* of whatever mechanism wrote
+% to that file, regardless of which internal LaTeX pathway did it.)
+%
+% Call it directly in raw LaTeX instead of a Markdown heading — see
+% contents.qmd for the exact usage.
+% ============================================================
+\makeatletter
+\newif\ifgi@tochasentries
+\newcommand{\giOptionalTOCList}[2]{%
+  \gi@tochasentriesfalse
+  \begingroup
+    \makeatletter
+    \def\contentsline##1##2##3##4{\global\gi@tochasentriestrue}%
+    \def\addvspace##1{}%
+    \InputIfFileExists{\jobname.#1}{}{}%
+  \endgroup
+  \ifgi@tochasentries
+    \chapter*{#2}
+    \addcontentsline{toc}{chapter}{#2}
+    \markboth{#2}{#2}
+  \fi
+  \@starttoc{#1}
+}
+\makeatother

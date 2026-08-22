@@ -1,0 +1,66 @@
+project:
+  type: colophon   # provided by _extensions/colophon/ — the engine
+                   # (preamble.tex, and the format-level settings
+                   # below like fig-pos/geometry/documentclass) lives
+                   # there now, brand-agnostic and shouldn't need to
+                   # change per course or per brand. This one line is
+                   # what makes the whole book/xelatex/fig-pos/etc.
+                   # setup apply — see README's "Installing via Quarto
+                   # extension" section for what this buys you over
+                   # a plain copied template (mainly: `quarto update`
+                   # can pull in engine fixes later without disturbing
+                   # your own content).
+
+bibliography: references.bib   # citation source — see references.qmd
+                                # for where the reference list itself
+                                # actually gets printed.
+csl: apa.csl                   # citation/reference formatting style —
+                                # APA 7th edition, a sensible default
+                                # for most professional/practitioner
+                                # course content. See README's
+                                # "Citation style" section for why,
+                                # and how to swap it for a different
+                                # style if a specific book needs one.
+                                # Lives here, not in the extension —
+                                # this is exactly the kind of thing a
+                                # specific book might want to swap.
+
+book:
+  chapters:
+    - index.qmd             # required by Quarto as the book's home page —
+                             # doubles as the Copyright page so the
+                             # mandatory slot isn't wasted on a blank page.
+                             # The actual title page is injected via
+                             # title-page.tex (include-before-body below),
+                             # outside the chapter-file model, so it isn't
+                             # wrapped in a \chapter and doesn't force an
+                             # extra blank page ahead of it.
+    - preface.qmd
+    - contents.qmd          # explicit TOC placement — after Preface
+    - introduction.qmd     # mainmatter switch happens at end of contents.qmd
+    - chapter-01.qmd
+    - chapter-02.qmd
+    - references.qmd        # bibliography — see the file itself for
+                             # how citations resolve here from .bib
+    - closing.qmd           # back matter — organization bio + thank-you
+                             # pages, both unnumbered. Add more here
+                             # the same way (glossary, index, etc.).
+
+
+format:
+  colophon-pdf:                # provided by the extension — everything
+                                # it doesn't already set (fig-pos,
+                                # documentclass, geometry, etc.) is
+                                # inherited from _extensions/colophon/
+                                # _extension.yml; only per-book content
+                                # goes here.
+    include-in-header:
+      - brand.tex                # brand identity: colors, fonts, book
+                                  # title. Swap this file to reuse the
+                                  # toolkit for a different brand.
+      - title-page-content.tex   # edit THIS for title-page text —
+                                  # see the comments inside it. It's
+                                  # loaded before title-page.tex below
+                                  # so its variables are ready to use.
+    include-before-body:
+      - title-page.tex

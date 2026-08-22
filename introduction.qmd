@@ -1,0 +1,3 @@
+# Introduction {.unnumbered}
+
+This is where page numbering restarts at 1. Marking this heading `{.unnumbered}` keeps it out of chapter numbering — it still appears in the Table of Contents and still lands on page 1, it just doesn't consume "Chapter 1." The next real chapter heading after this one becomes Chapter 1. (If you'd rather have the Introduction itself be Chapter 1 — some books do it that way — just remove `{.unnumbered}` from the heading above.)

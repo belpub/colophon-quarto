@@ -1,0 +1,25 @@
+project:
+  type: colophon
+
+bibliography: references.bib
+csl: apa.csl
+
+book:
+  chapters:
+    - index.qmd
+    - preface.qmd
+    - contents.qmd
+    - introduction.qmd
+    - chapter-01.qmd
+    - chapter-02.qmd
+    - appendix-a.qmd
+    - references.qmd
+    - closing.qmd
+
+format:
+  colophon-pdf:
+    include-in-header:
+      - brand.tex
+      - title-page-content.tex
+    include-before-body:
+      - title-page.tex

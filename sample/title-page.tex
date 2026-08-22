@@ -1,0 +1,36 @@
+% ============================================================
+% TITLE PAGE LAYOUT — the design/structure. To change the words on
+% the title page, edit title-page-content.tex instead; you shouldn't
+% need to touch this file for a normal content update.
+%
+% Rendered via include-before-body, BEFORE Quarto's own chapter
+% machinery touches any .qmd content. This is the only reliable way
+% to get true page-1 content with no \chapter wrapper (which would
+% otherwise force an extra blank page ahead of it) and no numbering
+% side effects.
+% ============================================================
+\begin{titlepage}
+\centering
+\vspace*{2cm}
+{\headingfont\Huge\bfseries\color{giPrimary}\giTitlePageTitle\par}
+\vspace{0.3cm}
+{\headingfont\Large\color{giCrimson}\giTitlePageCode\par}
+\vspace{0.6cm}
+{\color{giCrimson}\rule{0.15\textwidth}{1pt}\par}
+\vspace{0.8cm}
+{\headingfont\Large\color{giSecondary}\giTitlePageSubtitle\par}
+\vspace{1cm}
+{\itshape\color{giInk}\giTitlePageTagline\par}
+\vfill
+\includegraphics[width=\giTitlePageLogoWidth\textwidth]{\giTitlePageLogo}
+\vspace{2.5cm}
+\end{titlepage}
+
+% Quarto/Pandoc's book template always fires its own \frontmatter +
+% \mainmatter pair immediately after \begin{document}, before this
+% file is even inserted. That leaves the doc in "mainmatter" (arabic)
+% mode by default, so re-assert \frontmatter here, right after the
+% title page, so Copyright/Preface/TOC get roman numerals with no
+% chapter numbers. \mainmatter is turned back on exactly once, at the
+% end of contents.qmd, right before the Introduction chapter.
+\frontmatter
