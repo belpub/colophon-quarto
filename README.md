@@ -30,13 +30,13 @@ You're probably *not* the target user if you need a single one-off document (a n
 **No LaTeX knowledge required to use it day to day.** You write Markdown; the toolkit's `preamble.tex` and `brand.tex` do the LaTeX work invisibly underneath. You'll only ever touch raw LaTeX directly for the handful of things Markdown genuinely can't express on its own (a captioned table, a landscape page) — and those are documented with working, copy-pasteable examples, not left for you to invent.
 
 New to this project? Start with
-**`docs/BOOK-CREATION-GUIDE.md`** — it covers installing Quarto, VS Code, and TinyTeX from scratch, then walks through every day-to-day task (adding a chapter, tables, citations, branding). This README is the deeper reference underneath that guide: the *why* behind this scaffold's less obvious design choices, for whoever ends up maintaining or extending it.
+**`[docs/BOOK-CREATION-GUIDE.md](https://github.com/belpub/colophon-quarto/blob/main/docs/BOOK-CREATION-GUIDE.md)`** — it covers installing Quarto, VS Code, and TinyTeX from scratch, then walks through every day-to-day task (adding a chapter, tables, citations, branding). This README is the deeper reference underneath that guide: the *why* behind this scaffold's less obvious design choices, for whoever ends up maintaining or extending it.
 
 ## What this is
 This is a brand-agnostic starting point for producing book-style PDFs (course books, manuals, handbooks) with Quarto + LaTeX. It renders out of the box with **zero setup** — no fonts to source, no logo required, generic placeholder colors — so you can confirm the whole pipeline works before customizing anything. Adapting it to a real brand is a small, contained edit (see "Making this your own" below), not a rewrite.
 
 ## Before you render
-One-time setup: `quarto install tinytex` (see `docs/BOOK-CREATION-GUIDE.md` for full installation steps if this is
+One-time setup: `quarto install tinytex` (see `[docs/BOOK-CREATION-GUIDE.md](https://github.com/belpub/colophon-quarto/blob/main/docs/BOOK-CREATION-GUIDE.md)` for full installation steps if this is
 a new machine). That's it — this toolkit ships with everything else it needs.
 
 ## Getting a project — two ways
@@ -352,4 +352,4 @@ Why APA as the starting default: it's the most widely recognized citation conven
 If Quarto auto-generates a second title page, remove any `title:` / `subtitle:` fields from _quarto.yml — index.qmd supplies the title page directly.
 
 ## License
-MIT — see `LICENSE`. Use this for anything: a commercial course, an internal handbook, a personal book project. Attribution is appreciated but not required. If you build on it and find something worth sharing back, a pull request is very welcome.
+MIT — see `[LICENSE](https://github.com/belpub/colophon-quarto/blob/main/LICENSE)`. Use this for anything: a commercial course, an internal handbook, a personal book project. Attribution is appreciated but not required. If you build on it and find something worth sharing back, a pull request is very welcome.
