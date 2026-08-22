@@ -336,4 +336,4 @@ update `csl:` in `_quarto.yml` to point at it. No other changes needed — citat
 If Quarto auto-generates a second title page, remove any `title:` / `subtitle:` fields from _quarto.yml — index.qmd supplies the title page directly.
 
 ## License
-MIT — see [`LICENSE`[(https://github.com/belpub/colophon-quarto/blob/main/LICENSE). Use this for anything: a commercial course, an internal handbook, a personal book project. Attribution is appreciated but not required. If you build on it and find something worth sharing back, a pull request is very welcome.
+MIT — see [`LICENSE`](https://github.com/belpub/colophon-quarto/blob/main/LICENSE). Use this for anything: a commercial course, an internal handbook, a personal book project. Attribution is appreciated but not required. If you build on it and find something worth sharing back, a pull request is very welcome.
