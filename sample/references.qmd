@@ -1,9 +1,0 @@
-# References {.unnumbered}
-
-Citations anywhere in this book — like @demo2020scaling or
-[@christensen2019innovation] — pull from `references.bib` and
-resolve automatically. Use `@key` for an inline citation or `[@key]`
-for a parenthetical one.
-
-::: {#refs}
-:::

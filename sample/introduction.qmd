@@ -1,8 +1,0 @@
-# Introduction {.unnumbered}
-
-Meridian Mobility is a fictional ride-hailing company used
-throughout this sample to illustrate a common business pattern:
-expanding into a new, capital-intensive line of business before the
-original one is stable. The specifics are invented; the shape of
-the story is deliberately generic, since the point here is
-Colophon's typesetting, not the case study itself.
