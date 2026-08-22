@@ -1,5 +1,7 @@
 # Colophon — a Quarto Book Scaffold
 
+[![Latest Release](https://img.shields.io/github/v/release/belpub/colophon-quarto)](https://github.com/belpub/colophon-quarto/releases/latest)
+
 A production-tested Quarto + LaTeX scaffold for turning Markdown into properly typeset book PDFs — course books, manuals, certification guides, technical handbooks — without hand-fighting LaTeX for every chapter, table, or landscape page.
 
 **Why this exists.** Quarto renders books out of the box, but a handful of real publishing needs — a caption that actually shows up in the List of Tables, a wide table that needs to rotate to landscape without wasting a page, an appendix that numbers itself "Appendix A" instead of "Chapter 11," front/main/back matter that numbers pages correctly across all three — aren't solved by Quarto's defaults, and the fixes aren't always obvious or documented in one place. This toolkit is those fixes, pre-built and tested, so you don't have to rediscover them one broken render at a time.
