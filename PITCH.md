@@ -14,6 +14,8 @@ Quarto renders books beautifully out of the box, right up until you need somethi
 - **Citation styling** (APA by default, swappable to anything via one YAML line) that actually produces a populated References section, not an empty one.
 - **A documented, safer path for diagrams** (Mermaid, Graphviz) that sidesteps a real, confirmed Chrome-dependency trap in Quarto's native diagram-to-PDF pipeline.
 
+**Two rendered sample PDFs are in the repo** — see the claims above actually hold, not just asserted.
+
 ## Who it's for
 
 Anyone writing a book-length document in Quarto — a course book, training manual, certification guide, internal handbook, technical reference — who wants it to look genuinely professionally typeset without becoming a LaTeX expert first. You write plain Markdown; the toolkit's engine handles the LaTeX invisibly underneath. The few things Markdown genuinely can't express on its own (a captioned table, a landscape page) come with working, copy-pasteable examples — not left for you to reverse-engineer.
