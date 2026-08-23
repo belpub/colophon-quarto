@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/colophon-logomark-banner.png" width="550" alt="Colophon logo">
+</p>
+
 # Colophon — a Quarto Book Scaffold
 
 [![Latest Release](https://img.shields.io/github/v/release/belpub/colophon-quarto)](https://github.com/belpub/colophon-quarto/releases/latest)
