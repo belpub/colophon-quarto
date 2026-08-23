@@ -34,6 +34,12 @@ don't have to rediscover them one broken render at a time.
   avoids a real, confirmed Chrome-dependency trap in Quarto's native
   PDF rendering path
 
+**See it rendered, not just described:** two short sample PDFs
+(15 pages each) in [`Sample-PDFs/`](Sample-PDFs) show every feature
+above — roman-numeral front matter, a working List of Tables, an
+appendix numbered "Appendix A," and a landscape table rotated
+correctly — actually built, not mocked up.
+
 **Honest scope note:** this has been tested thoroughly against one
 real, full-length book (70+ pages, multiple parts, landscape
 appendices, dozens of captioned tables) through repeated, deliberate
