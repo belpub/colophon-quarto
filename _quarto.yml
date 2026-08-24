@@ -40,6 +40,14 @@ book:
     - introduction.qmd     # mainmatter switch happens at end of contents.qmd
     - chapter-01.qmd
     - chapter-02.qmd
+    - example.qmd            # quick-reference chapter showing every
+                             # distinctive Colophon pattern in one
+                             # place — safe to delete once you've
+                             # started your own real content.
+    - landscape-chapter-example.qmd  # a real, executing landscape-
+                             # only chapter — see the file itself.
+    - appendix-example.qmd   # a real, executing lettered appendix —
+                             # see the file itself.
     - references.qmd        # bibliography — see the file itself for
                              # how citations resolve here from .bib
     - closing.qmd           # back matter — organization bio + thank-you

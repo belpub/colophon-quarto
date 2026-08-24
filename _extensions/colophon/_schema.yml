@@ -1,0 +1,12 @@
+# Schema for the colophon extension
+#
+# Colophon is a project-type extension only — it contributes a book
+# project type and a set of default PDF format settings, not any
+# configurable options, shortcodes, or filters. This schema is
+# intentionally minimal: it declares the project type so IDE tooling
+# (Quarto Wizard) can suggest it for project.type in _quarto.yml,
+# and stops there rather than describing options that don't exist.
+$schema: https://m.canouil.dev/quarto-wizard/assets/schema/v2/extension-schema.json
+
+projects:
+  - belpub/colophon

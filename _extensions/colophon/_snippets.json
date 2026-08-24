@@ -1,0 +1,93 @@
+{
+  "Captioned Table": {
+    "prefix": "colophon-table",
+    "body": [
+      "```{=latex}",
+      "\\begin{longtable}[]{@{}",
+      "  >{\\raggedright\\arraybackslash}p{0.3\\linewidth}",
+      "  >{\\raggedright\\arraybackslash}p{0.6\\linewidth}",
+      "@{}}",
+      "\\toprule\\noalign{}",
+      "\\rowcolor{giTableHeaderShade}",
+      "\\textbf{${1:Column A}} & \\textbf{${2:Column B}} \\\\",
+      "\\midrule\\noalign{}",
+      "\\endhead",
+      "\\cellcolor{giTableFirstColShade}${3:Row value} & ${4:Row value} \\\\",
+      "\\bottomrule",
+      "\\caption{\\label{tbl-${5:label}}${0:Caption text.}}",
+      "\\end{longtable}",
+      "```"
+    ],
+    "description": "A captioned, brand-shaded table that appears in the List of Tables. Markdown pipe tables can't do this — Pandoc always puts their caption above, with no way to move it."
+  },
+  "Captioned Figure": {
+    "prefix": "colophon-figure",
+    "body": [
+      "![${1:Caption text.}](${2:path/to/image.png}){#fig-${3:label} width=\"${4:60%}\" fig-alt=\"${0:Accessible description for screen readers.}\"}"
+    ],
+    "description": "A captioned figure that appears in the List of Figures, with a separate fig-alt for accessibility — plain Markdown, no raw LaTeX needed."
+  },
+  "Landscape Table": {
+    "prefix": "colophon-landscape-table",
+    "body": [
+      "```{=latex}",
+      "\\begin{landscape}",
+      "\\giLandscapeHeader",
+      "",
+      "\\begin{longtable}[]{@{}",
+      "  >{\\raggedright\\arraybackslash}p{0.2\\linewidth}",
+      "  >{\\raggedright\\arraybackslash}p{0.2\\linewidth}",
+      "  >{\\raggedright\\arraybackslash}p{0.2\\linewidth}",
+      "  >{\\raggedright\\arraybackslash}p{0.2\\linewidth}",
+      "@{}}",
+      "\\toprule\\noalign{}",
+      "\\rowcolor{giTableHeaderShade}",
+      "\\textbf{${1:Column A}} & \\textbf{${2:Column B}} & \\textbf{${3:Column C}} & \\textbf{${4:Column D}} \\\\",
+      "\\midrule\\noalign{}",
+      "\\endhead",
+      "\\cellcolor{giTableFirstColShade}${5:Row value} & & & \\\\",
+      "\\bottomrule",
+      "\\caption{\\label{tbl-${6:label}}${7:Caption text.}}",
+      "\\end{longtable}",
+      "",
+      "\\giLandscapeFooter",
+      "\\end{landscape}",
+      "```$0"
+    ],
+    "description": "A wide table that rotates to landscape orientation, with matching branded header/footer — only this page rotates, everything around it stays portrait."
+  },
+  "Landscape-Only Chapter Opener": {
+    "prefix": "colophon-landscape-chapter",
+    "body": [
+      "```{=latex}",
+      "\\giLandscapeChapterOpener{${1:Chapter Title}}",
+      "\\begin{landscape}",
+      "\\giLandscapeChapterHeader",
+      "",
+      "${2:... table or figure ...}",
+      "",
+      "\\giLandscapeFooter",
+      "\\end{landscape}",
+      "```$0"
+    ],
+    "description": "Start a chapter whose only content is landscape, without wasting a page on a bare portrait title first. Use instead of a Markdown # heading — not alongside one."
+  },
+  "Enable Appendix": {
+    "prefix": "colophon-enable-appendix",
+    "body": [
+      "```{=latex}",
+      "\\giEnableAppendix",
+      "```$0"
+    ],
+    "description": "Switch from numbered chapters (Chapter 1, 2, ...) to lettered appendices (Appendix A, B, ...). Place at the end of the last numbered chapter's file, not the top of the first appendix."
+  },
+  "Enable Back Matter": {
+    "prefix": "colophon-enable-backmatter",
+    "body": [
+      "```{=latex}",
+      "\\giEnableBackMatter",
+      "```$0"
+    ],
+    "description": "Switch to unnumbered back matter with roman page numbers, continuing from where front matter left off. Place at the end of the last numbered chapter or appendix file."
+  }
+}

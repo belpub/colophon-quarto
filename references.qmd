@@ -1,8 +1,16 @@
 # References {.unnumbered}
 
-Citations anywhere in this book — like @Smith:2021qr or [@Smith:2022jd] — pull from `references.bib` and resolve automatically. Use `@key` for an inline citation ("as Smith and Jones (2021) explain...") or `[@key]` for a parenthetical one ("...is well established (Smith & Jones, 2021)"). Multiple keys in one bracket (`[@key1; @key2]`) combine into a single citation.
+Citations anywhere in this book — like @Smith:2021qr or
+[@Smith:2022jd] — pull from `references.bib` and resolve
+automatically. Use `@key` for an inline citation ("as Smith and
+Jones (2021) explain...") or `[@key]` for a parenthetical one
+("...is well established (Smith & Jones, 2021)"). Multiple keys in
+one bracket (`[@key1; @key2]`) combine into a single citation.
 
-The actual reference list prints below — Quarto inserts it wherever this `refs` div appears, so it's under your control the same way the Table of Contents and List of Tables are (rather than trusting Quarto's default of appending it to the very end of the document).
+The actual reference list prints below — Quarto inserts it wherever
+this `refs` div appears, so it's under your control the same way the
+Table of Contents and List of Tables are (rather than trusting
+Quarto's default of appending it to the very end of the document).
 
 ::: {#refs}
 :::

@@ -1,0 +1,79 @@
+# Extension Capabilities Reference
+
+This chapter is a quick, self-contained reference for Colophon's
+distinctive patterns — the handful of things plain Markdown can't
+express on its own, shown together in one place so you can see the
+actual syntax without reading a full chapter of prose around it. For
+the narrative walkthrough, see Chapters 1 and 2. For the complete
+written documentation, see the main README and
+`docs/BOOK-CREATION-GUIDE.md`.
+
+## A captioned table
+
+Markdown pipe tables always put their caption above the table, with
+no way to move it. For a caption below the table — and a real entry
+in the List of Tables — write the table in raw LaTeX instead:
+
+```{=latex}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{0.3\linewidth}
+  >{\raggedright\arraybackslash}p{0.6\linewidth}
+@{}}
+\toprule\noalign{}
+\rowcolor{giTableHeaderShade}
+\textbf{Term} & \textbf{Definition} \\
+\midrule\noalign{}
+\endhead
+\cellcolor{giTableFirstColShade}Extension & Reusable Quarto packaging for a project type, format, or filter. \\
+\bottomrule
+\caption{\label{tbl-example-terms}A minimal captioned table, built from the ``Captioned Table'' snippet.}
+\end{longtable}
+```
+
+## A captioned figure
+
+Figures are simpler — plain Markdown, no raw LaTeX needed. The
+caption prints below the image by default, and a `fig-alt` attribute
+gives you a separate description for accessibility:
+
+![A placeholder image, standing in for a real figure.](logo-placeholder.png){#fig-example width="40%" fig-alt="A placeholder box with the toolkit's default logo text."}
+
+## A landscape table
+
+A wide table gets its own rotated page — everything before and after
+it stays portrait:
+
+```{=latex}
+\begin{landscape}
+\giLandscapeHeader
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+@{}}
+\toprule\noalign{}
+\rowcolor{giTableHeaderShade}
+\textbf{Column A} & \textbf{Column B} & \textbf{Column C} & \textbf{Column D} \\
+\midrule\noalign{}
+\endhead
+\cellcolor{giTableFirstColShade}Row 1 & Data & Data & Data \\
+\bottomrule
+\caption{\label{tbl-example-landscape}A wide table that needed the extra room.}
+\end{longtable}
+
+\giLandscapeFooter
+\end{landscape}
+```
+
+## Patterns shown elsewhere, not here
+
+Two more patterns replace a chapter heading entirely, or mark a
+transition point in the whole book, rather than fitting inside an
+ordinary chapter like this one — so rather than show them as inert
+text, this toolkit actually uses them for real, right after this
+chapter: Chapter 4 is a genuine landscape-only chapter (see
+`landscape-chapter-example.qmd`), and Appendix A right after it
+demonstrates the real switch from numbered chapters to lettered
+appendices (see `appendix-example.qmd`).

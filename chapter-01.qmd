@@ -1,8 +1,11 @@
 # Governance Fundamentals
 
-Regular portrait-mode content goes here — write normally, exactly as you did in Typora. Plain headings, lists, bold/italic, images, and narrow tables all work with no special syntax.
+Regular portrait-mode content goes here — write normally, exactly as
+you did in Typora. Plain headings, lists, bold/italic, images, and
+narrow tables all work with no special syntax.
 
-Here is a normal narrow table (fine in portrait). These definitions align with the foundational framework in @Smith:2021qr.
+Here is a normal narrow table (fine in portrait). These definitions
+align with the foundational framework in @Smith:2021qr.
 
 **Core risk terminology**
 
@@ -26,9 +29,22 @@ Risk & Potential for loss \\
 
 ## Example: wide table in landscape with header, first-column, and row shading
 
-When a table has many columns and needs more horizontal room, wrap it in a landscape block. Only this table's page rotates — everything before and after stays portrait.
+When a table has many columns and needs more horizontal room, wrap it
+in a landscape block. Only this table's page rotates — everything
+before and after stays portrait.
 
-Pandoc's auto-generated tables (from Markdown pipe syntax) can't shade just the header row or just one column — only whole-row zebra striping via `\rowcolors`. For that level of control, write the table directly in raw LaTeX instead, using `\cellcolor` per cell (it overrides whatever `\rowcolor` set for that row). The header/ first-column colors below are the brand-defined `giTable...` colors from `preamble.tex`, with a hairline `giTableDivider` rule between rows instead of alternating-row shading — combining zebra striping *and* rules on the same table tends to look busy/competing; picking one is cleaner. (Zebra striping is still available via `\rowcolor` if you'd rather have it back instead of the dividers — just swap which one runs between the data rows below.)
+Pandoc's auto-generated tables (from Markdown pipe syntax) can't
+shade just the header row or just one column — only whole-row zebra
+striping via `\rowcolors`. For that level of control, write the
+table directly in raw LaTeX instead, using `\cellcolor` per cell
+(it overrides whatever `\rowcolor` set for that row). The header/
+first-column colors below are the brand-defined `giTable...` colors
+from `preamble.tex`, with a hairline `giTableDivider` rule between
+rows instead of alternating-row shading — combining zebra striping
+*and* rules on the same table tends to look busy/competing; picking
+one is cleaner. (Zebra striping is still available via `\rowcolor`
+if you'd rather have it back instead of the dividers — just swap
+which one runs between the data rows below.)
 
 The control register methodology follows @Smith:2022jd.
 
@@ -80,8 +96,27 @@ review frequency.}
 \end{landscape}
 ```
 
-Portrait content resumes right after the landscape table. Tables labeled `tbl-*` are cross-referenceable elsewhere in the text — for example, @tbl-terms and @tbl-controls above resolve automatically to "Table 2.1" / "Table 2.2" and stay correct even if the tables get reordered or renumbered later.
+Portrait content resumes right after the landscape table. Tables
+labeled `tbl-*` are cross-referenceable elsewhere in the text — for
+example, @tbl-terms and @tbl-controls above resolve automatically to
+"Table 2.1" / "Table 2.2" and stay correct even if the tables get
+reordered or renumbered later.
 
-*Table headers* (the bold line right above a table, like "Sample requirements register" above) are just an ordinary bold
-paragraph — no special syntax needed, works the same for both Markdown and raw-LaTeX tables. *Captions* need raw LaTeX either way: Pandoc's native Markdown table caption syntax (a `:` line after the table) always renders the caption **above** the table, with no way to move it — that's hardcoded in Pandoc's template, not something this project's styling controls. To get a caption below the table (as both tables on this page do), write the table as raw LaTeX and place `\caption{}\label{}` near the end, right before `\end{longtable}` — and make sure the table is **not** wrapped in
-`\def\LTcaptype{none}` (that's Pandoc's own convention for suppressing numbering on *uncaptioned* tables; a captioned table needs it removed, or the caption won't number or show up in the List of Tables). Citations don't resolve inside a raw LaTeX block (Quarto's citation processor only sees actual Markdown text), so keep any `@citekey` in the surrounding prose rather than inside the `\caption{}` text itself.
+*Table headers* (the bold line right above a table, like "Sample
+requirements register" above) are just an ordinary bold
+paragraph — no special syntax needed, works the same for both
+Markdown and raw-LaTeX tables. *Captions* need raw LaTeX either
+way: Pandoc's native Markdown table caption syntax (a `:` line after
+the table) always renders the caption **above** the table, with no
+way to move it — that's hardcoded in Pandoc's template, not
+something this project's styling controls. To get a caption below
+the table (as both tables on this page do), write the table as raw
+LaTeX and place `\caption{}\label{}` near the end, right before
+`\end{longtable}` — and make sure the table is **not** wrapped in
+`\def\LTcaptype{none}` (that's Pandoc's own convention for
+suppressing numbering on *uncaptioned* tables; a captioned table
+needs it removed, or the caption won't number or show up in the
+List of Tables). Citations don't resolve inside a raw LaTeX block
+(Quarto's citation processor only sees actual Markdown text), so
+keep any `@citekey` in the surrounding prose rather than inside the
+`\caption{}` text itself.

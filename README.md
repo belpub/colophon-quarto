@@ -6,149 +6,152 @@
 
 [![Latest Release](https://img.shields.io/github/v/release/belpub/colophon-quarto)](https://github.com/belpub/colophon-quarto/releases/latest)
 
-A production-tested Quarto + LaTeX scaffold for turning Markdown into
-properly typeset book PDFs — course books, manuals, certification
-guides, technical handbooks — without hand-fighting LaTeX for every
-chapter, table, or landscape page.
+A Quarto and LaTeX scaffold for turning Markdown into properly
+typeset book PDFs: course books, manuals, certification guides,
+technical handbooks. The idea is that you shouldn't have to
+hand-fight LaTeX every time you add a chapter, a table, or a
+landscape page.
 
-**Why this exists.** Quarto renders books out of the box, but a
-handful of real publishing needs — a caption that actually shows up
-in the List of Tables, a wide table that needs to rotate to
-landscape without wasting a page, an appendix that numbers itself
-"Appendix A" instead of "Chapter 11," front/main/back matter that
-numbers pages correctly across all three — aren't solved by Quarto's
-defaults, and the fixes aren't always obvious or documented in one
-place. This toolkit is those fixes, pre-built and tested, so you
-don't have to rediscover them one broken render at a time.
+**Why this exists.** 
+
+Quarto renders books well out of the box, but a
+handful of things real books need aren't solved by the defaults: a
+caption that actually shows up in the List of Tables, a wide table
+that rotates to landscape without wasting a page, an appendix that
+reads "Appendix A" instead of "Chapter 11," page numbering that stays
+correct across front matter, chapters, and back matter. None of these
+are exotic requirements. They just aren't obvious to fix, and the
+fixes aren't documented in any one place. This toolkit is those
+fixes, already made, so you don't have to rediscover each one the
+hard way.
 
 **What's already handled for you:**
-- Front/main/back matter with correct, continuous page numbering
-  (roman → arabic → roman) across the whole book
-- A List of Tables/Figures that only appears when there's something
-  to list — no empty, oddly-titled page in a book with no tables
-- Figures and tables that render exactly where you place them in the
-  source, not wherever LaTeX's default float algorithm defers them to
+- Front, main, and back matter with correct, continuous page
+  numbering — roman numerals, then arabic, then roman again — across
+  the whole book
+- A List of Tables and List of Figures that only show up when
+  there's something to list, instead of an empty page with a title
+  and nothing under it
+- Figures and tables that render exactly where you place them,
+  rather than wherever LaTeX's default float behaviour happens to
+  push them
 - Landscape pages for wide tables, including a landscape-only chapter
-  opener that doesn't waste a page on a bare portrait title first
-- Numbered appendices ("Appendix A," "Appendix B," ...) that switch
-  back to numbered chapters or roman-numbered back matter cleanly
-- APA citation formatting out of the box, swappable to any other
-  style with one YAML line
-- A documented, tested path for diagrams (Mermaid, Graphviz) that
-  avoids a real, confirmed Chrome-dependency trap in Quarto's native
-  PDF rendering path
-
-**See it rendered, not just described:** two short sample PDFs
-(15 pages each) in [`Sample-PDFs/`](Sample-PDFs) show every feature
-above — roman-numeral front matter, a working List of Tables, an
-appendix numbered "Appendix A," and a landscape table rotated
-correctly — actually built, not mocked up.
+  opener so a chapter that's nothing but a wide table doesn't waste a
+  page on a bare portrait title first
+- Numbered appendices ("Appendix A," "Appendix B," and so on) that
+  switch cleanly back to regular chapters or to roman-numbered back
+  matter
+- APA citation formatting out of the box, and one YAML line to swap
+  it for a different style
+- A documented way to add diagrams (Mermaid, Graphviz) that avoids a
+  real Chrome dependency issue in Quarto's built-in PDF rendering
 
 **Honest scope note:** this has been tested thoroughly against one
-real, full-length book (70+ pages, multiple parts, landscape
-appendices, dozens of captioned tables) through repeated, deliberate
-bug-hunting — not yet against a wide range of community use. If you
-hit something it doesn't handle, please open an issue; that's
-exactly how this gets more solid.
+real, full-length book — 70+ pages, several parts, landscape
+appendices, dozens of captioned tables — through repeated, deliberate
+bug-hunting. It hasn't yet been tested against a wide range of other
+people's projects. If you run into something it doesn't handle,
+please open an issue. That's exactly how this gets more solid.
 
 ## Who this is for
-You're a good fit for this toolkit if:
-- You're writing a book-length document — a course book, training
-  manual, certification guide, internal handbook, technical
-  reference — not a single article or a slide deck.
-- You want the finished result to look genuinely professionally
-  typeset — proper front/back matter, working cross-references, a
-  real List of Tables — without hand-coding LaTeX yourself.
-- You're comfortable writing in plain Markdown (or willing to learn
-  it — it's a lot smaller than it sounds) but don't want to become a
-  LaTeX expert just to produce a clean PDF.
-- You'd rather start from something that's already hit and fixed the
-  sharp edges than discover them yourself three chapters in.
 
-You're probably *not* the target user if you need a single
-one-off document (a normal Quarto or Pandoc setup is simpler for
-that), or if your primary output is a website/HTML rather than a
-printed or PDF book — this toolkit's value is almost entirely in the
-PDF/print-specific typesetting problems it solves.
+You're a good fit for this toolkit if you're writing something
+book-length — a course book, training manual, certification guide,
+internal handbook, technical reference — not a single article or a
+slide deck. You want the finished result to actually look
+professionally typeset: proper front and back matter, working
+cross-references, a real List of Tables, without hand-coding LaTeX
+yourself. You're comfortable writing plain Markdown, or willing to
+learn it (it's smaller than it sounds), but you don't want to become
+a LaTeX expert just to get a clean PDF out the other end. And you'd
+rather start from something that's already hit its sharp edges than
+find them yourself three chapters into your own book.
 
-**No LaTeX knowledge required to use it day to day.** You write
-Markdown; the toolkit's `preamble.tex` and `brand.tex` do the LaTeX
-work invisibly underneath. You'll only ever touch raw LaTeX directly
-for the handful of things Markdown genuinely can't express on its
-own (a captioned table, a landscape page) — and those are documented
-with working, copy-pasteable examples, not left for you to invent.
+You're probably not the right fit if you need a single one-off
+document — a plain Quarto setup is simpler for that — or if your
+output is a website rather than a PDF. This toolkit's whole value is
+in the print-specific typesetting problems it solves, and those
+problems mostly don't exist on the web.
 
-New to this project? Start with
-[**`docs/BOOK-CREATION-GUIDE.md`**](https://github.com/belpub/colophon-quarto/blob/main/docs/BOOK-CREATION-GUIDE.md) — it covers installing Quarto, VS
-Code, and TinyTeX from scratch, then walks through every day-to-day
-task (adding a chapter, tables, citations, branding). This README is
-the deeper reference underneath that guide: the *why* behind this
-scaffold's less obvious design choices, for whoever ends up
-maintaining or extending it.
+**You don't need to know LaTeX to use this day to day.** 
+
+You write Markdown, and `preamble.tex` and `brand.tex` handle the LaTeX
+underneath, invisibly. The only time you'll touch raw LaTeX directly
+is for the handful of things Markdown genuinely can't express on its
+own — a captioned table, a landscape page — and those come with
+working examples you can copy and paste, not something you have to
+work out yourself.
+
+New to this project? Start with [**`docs/BOOK-CREATION-GUIDE.md`**](https://github.com/belpub/colophon-quarto/blob/main/docs/BOOK-CREATION-GUIDE.md) —
+it walks through installing Quarto, VS Code, and TinyTeX from
+scratch, then covers the everyday tasks: adding a chapter, tables,
+citations, branding. Think of this README as the layer underneath
+that guide — the reasoning behind the less obvious design choices,
+for whoever ends up maintaining or extending this.
 
 ## What this is
-This is a brand-agnostic starting point for producing book-style
-PDFs (course books, manuals, handbooks) with Quarto + LaTeX. It
-renders out of the box with **zero setup** — no fonts to source, no
-logo required, generic placeholder colors — so you can confirm the
-whole pipeline works before customizing anything. Adapting it to a
-real brand is a small, contained edit (see "Making this your own"
-below), not a rewrite.
+A brand-agnostic starting point for producing book-style PDFs —
+course books, manuals, handbooks — with Quarto and LaTeX. It renders
+out of the box with zero setup: no fonts to source, no logo
+required, generic placeholder colors. That's deliberate, so you can
+confirm the whole pipeline works before you customize anything.
+Turning it into a real brand later is a small, contained edit (see
+"Making this your own" below), not a rewrite.
 
 ## Before you render
 One-time setup: `quarto install tinytex` (see
 [`docs/BOOK-CREATION-GUIDE.md`](https://github.com/belpub/colophon-quarto/blob/main/docs/BOOK-CREATION-GUIDE.md) for full installation steps if this is
-a new machine). That's it — this toolkit ships with everything else
-it needs.
+a new machine). That's it — everything else this toolkit needs
+ships with it.
 
 ## Getting a project — two ways
-**Clone the whole repo** (simplest, and what most people want): the
-engine (`preamble.tex` and the format-level defaults it sets —
-`fig-pos`, `documentclass`, page geometry, and so on) already lives
-in `_extensions/colophon/`, packaged as a proper Quarto [project-type
-extension](https://quarto.org/docs/extensions/project-types.html) —
-nothing extra to install, `quarto render` works the moment you clone.
+The simplest option, and what most people want, is to **clone the
+whole repo**. The engine — `preamble.tex`, plus the format-level
+defaults it sets, like `fig-pos`, `documentclass`, and page geometry
+— already lives in `_extensions/colophon/`, packaged as a proper
+Quarto [project-type
+extension](https://quarto.org/docs/extensions/project-types.html).
+There's nothing extra to install. `quarto render` works the moment
+you clone.
 
-**Or add just the engine to an existing project** — if you already
-have a Quarto book project going and want this toolkit's machinery
-without its example content:
+If you already have a Quarto book project going and just want this
+toolkit's machinery, without its example content, you can **add just
+the engine**:
 ```bash
 quarto add belpub/colophon-quarto
 ```
 This installs into `_extensions/belpub/colophon/` — namespaced by
-the GitHub owner, confirmed by actually running the command against
-this repo, not assumed. That means the project type reference in
-your own `_quarto.yml` needs the same namespacing:
+the GitHub owner. That's worth knowing because the project type
+reference in your own `_quarto.yml` needs the same namespacing:
 ```yaml
 project:
   type: belpub/colophon
 ```
-(`type: colophon` on its own will not resolve — a real mistake this
-README had until it was caught by testing the actual install
-command rather than documenting from the theory of how it should
-work.) Then copy in `brand.tex` / `title-page.tex` /
-`title-page-content.tex` from this repo as your starting point
-(these three live at the project root, not inside the extension,
-since they're exactly the files you're meant to customize per book).
+`type: colophon` on its own won't resolve. (This README used to say
+otherwise — the mistake only surfaced once someone actually ran the
+install command instead of trusting the theory of how it should
+work, which is a good reminder to test rather than assume when you're
+writing your own extension.) Once it's installed, copy in `brand.tex`,
+`title-page.tex`, and `title-page-content.tex` from this repo as your
+starting point. Those three live at the project root, not inside the
+extension, because they're exactly the files you're meant to
+customize per book.
 
-To pull in a later engine update:
+When a later engine update comes along, pull it in with:
 ```bash
 quarto update extension belpub/colophon-quarto
 ```
-Confirmed working end to end — installed, then ran the update
-command against the live repo and got a clean "No Change" result
-when already current, exactly as expected.
 
-**The real benefit of the extension packaging over a plain copied
-template**: engine fixes reach you via that one command, without
-touching your own content. Confirmed by actually testing the
-conversion, not just documenting the theory — including one real bug
-it surfaced: the extension mechanism loads `preamble.tex` *before*
-`brand.tex`, the reverse of what a plain file list would do, which
-broke exactly one line (`preamble.tex` setting the body text color
-directly, before `brand.tex`'s colors existed yet). Fixed with
-`\AtBeginDocument{}`, deferring that one line until the full preamble
-has loaded — safe either way this toolkit gets used.
+That one command is really the point of packaging this as an
+extension rather than something you just copy. A future fix to the
+engine reaches you without touching anything you've written. Testing
+the actual conversion surfaced a real bug worth knowing about, too:
+the extension mechanism loads `preamble.tex` *before* `brand.tex`,
+the opposite of what a plain file list would do. That broke exactly
+one line — `preamble.tex` was setting the body text color directly,
+before `brand.tex`'s colors even existed yet. The fix was wrapping
+that one line in `\AtBeginDocument{}`, so it waits until the whole
+preamble has loaded. Safe either way this toolkit ends up being used.
 
 ## Rendering
     quarto render
@@ -187,52 +190,100 @@ change. See "Front matter / main matter architecture" below for why
 that separation matters and what happens if the two get mixed back
 together.
 
+## Cover page (optional)
+Off by default — most books built on this toolkit go straight from
+nothing to the title page, and that stays true unless you turn this
+on. To add a full-bleed cover image before the title page, add
+`cover-page.tex` to `include-before-body` in `_quarto.yml`, right
+before `title-page.tex`:
+```yaml
+include-before-body:
+  - cover-page.tex
+  - title-page.tex
+```
+Then set `\giCoverPageImage` in `title-page-content.tex` to your own
+image file (it defaults to `cover-placeholder.png`, a working
+example sized to the right proportions).
+
+"Full-bleed" means the image fills the entire physical page, edge to
+edge, with none of the rest of the book's normal 2cm margin. That's
+done with `\newgeometry{margin=0pt}` right before the image and
+`\restoregeometry` right after — both part of the `geometry`
+package, already loaded for everything else in this document, so
+nothing new to install. Tested end to end: the cover page itself has
+no page number and isn't part of the roman/arabic numbering sequence
+at all, the title page right after it renders with normal margins
+restored, and nothing about the rest of the book's page numbering
+shifts by adding it.
+
+The image gets stretched to fill the page exactly, not cropped, so
+it needs to already be sized to A4's proportions (roughly 0.707:1,
+width to height) to avoid looking distorted —
+`cover-placeholder.png` (1240×1754px) is a working example of that
+ratio to match if you're sizing your own.
+
+One distinction worth knowing if this book is ever going to a
+professional print shop: what's here is full-bleed within the page's
+own trim size, not press-ready bleed that extends past it. A
+physically printed, trimmed book cover usually needs actual bleed —
+commonly 3mm past the edge, so a slight trim misalignment doesn't
+leave a white sliver — and that's normally supplied as a separate
+file built to the printer's own template, not generated by this same
+pipeline. For a PDF that's viewed on screen, printed at home or in an
+office, or sent to a simpler print-on-demand service that just wants
+a full-page image, what's here is the right tool.
+
 ## Editing
 - Write chapter prose in Typora or VS Code — plain Markdown.
-- Add new chapters: create a .qmd file, add its filename to the
-  `chapters:` list in _quarto.yml.
-- chapter-01.qmd includes a working example of a landscape wide table
+- To add a new chapter, create a .qmd file and add its filename to
+  the `chapters:` list in `_quarto.yml`.
+- `chapter-01.qmd` has a working example of a landscape wide table,
   with brand-colored header/first-column shading and proportional
   (not equal-width) columns.
-- chapter-02.qmd includes a working example of a manual page break.
+- `chapter-02.qmd` has a working example of a manual page break.
+- `example.qmd` is a quick-reference chapter — every distinctive
+  pattern in one place, with no narrative around it: captioned
+  tables, captioned figures, landscape tables, and the two patterns
+  that can't run inside an ordinary chapter (the landscape-only
+  chapter opener, switching to appendices), shown as plain text
+  instead since they can't actually execute there. Delete it once
+  you've started writing your own content and don't need the cheat
+  sheet anymore.
 
 ## Em dashes and en dashes in headings
 Chapter titles and section headings render em dashes (—) and en
-dashes (–) correctly out of the box — but this took a real fix to
-get right, worth knowing about if you ever add a new custom font.
-`\setmainfont` (the body text font) gets fontspec's
-`Mapping=tex-text` font feature automatically, which is what
-converts LaTeX's `---`/`--` dash conventions into real em/en-dash
-glyphs. `\newfontfamily` (used for `\headingfont`, the font chapter
-and section titles are set in) does **not** get this automatically —
-without it, a heading with an em dash in the source renders as a
-literal `---` on the page, even though body text with the exact same
-character renders correctly right below it. Both toolkits'
-`brand.tex` explicitly add `Mapping = tex-text` to the
-`\newfontfamily\headingfont{...}` definition to fix this — confirmed
-this applies the same way regardless of whether the heading font is
-loaded from local files or as a system font (this toolkit's default,
-TeX Gyre Heros, uses the latter). If you ever swap in a different
-heading font, keep that option in the new font's own
-`\newfontfamily` block — dropping it silently reintroduces this
-exact bug.
+dashes (–) correctly out of the box, but it took a real fix to get
+there, and it's worth knowing about if you ever add a new custom
+font. The body text font gets this for free: `\setmainfont` picks up
+fontspec's `Mapping=tex-text` feature automatically, which is what
+turns LaTeX's `---`/`--` conventions into actual em/en-dash glyphs.
+`\newfontfamily` — used for `\headingfont`, the font chapter and
+section titles are set in — doesn't get this automatically. Without
+it, a heading with an em dash renders as a literal `---` right on the
+page, even while body text with the exact same character renders
+correctly just below it. Both this toolkit's and its sibling's
+`brand.tex` add `Mapping = tex-text` to the `\newfontfamily
+\headingfont{...}` line specifically to fix this, and it works the
+same way whether the heading font comes from local files or a system
+font (this toolkit's default, TeX Gyre Heros, is the latter). If you
+ever swap in a different heading font, carry that option over into
+the new font's own `\newfontfamily` block — leave it out and this
+exact bug comes back.
 
 ## Long chapter titles wrapping to two lines
 `\titleformat{\chapter}` in `preamble.tex` sets `\raggedright` on the
-title text — needed to fix a real, confirmed defect, not a
-preemptive safeguard. A long chapter title that wraps to a second
-line otherwise gets fully *justified* at `\Huge` size, which is
-LaTeX's normal paragraph default — but stretching a handful of huge
-words to exactly fill a line's width produces visibly uneven,
-overly wide gaps between them on the wrapped line, worse the fewer
-words that line has. Reproduced directly with a real long title
-("Dissecting Twelve Unique Security Failures and Governance Layers
-Across a Decade") and confirmed `\raggedright` fixes it cleanly, with
-zero effect on short, single-line titles — nothing to configure per
-chapter either way. Parts don't need the same fix: `\titleformat{\part}`
-already uses `\centering`, which doesn't stretch inter-word spacing
-the way justification does, so a long two-line part title was never
-affected by this.
+title text. That's fixing a real defect, not adding a safeguard
+against a hypothetical one. A long chapter title that wraps to a
+second line otherwise gets fully justified at `\Huge` size — LaTeX's
+normal behavior for a paragraph — and stretching a handful of huge
+words to exactly fill a line's width leaves visibly uneven, overly
+wide gaps between them, worse the fewer words that line has. A real
+long title ("Dissecting Twelve Unique Security Failures and
+Governance Layers Across a Decade") showed the problem clearly, and
+`\raggedright` fixes it with no effect on short, single-line titles —
+nothing to configure per chapter either way. Parts don't need the
+same fix: `\titleformat{\part}` already centers its text instead of
+justifying it, so a long two-line part title was never affected.
 
 ## Colors
 Generic placeholders, ready to replace in `brand.tex`:
@@ -244,23 +295,23 @@ Generic placeholders, ready to replace in `brand.tex`:
 | Accent (`giCrimson`) | `#A6303F` | Core accent — titles, rules. Also doubles as the risk-table "danger" color. |
 | Ink (`giInk`) | `#1A1A1A` | Body text |
 
-Plus supporting tints/neutrals (warning, success, accent link color,
-grays) — all defined in `brand.tex`, all placeholders.
+There are also supporting tints and neutrals — warning, success,
+accent link color, grays — all defined in `brand.tex`, all
+placeholders too.
 
 ## Logo
 `logo-placeholder.png` is a generic stand-in, referenced from
-`title-page-content.tex` (not hardcoded into the title page layout
-itself — see "Making this your own" above). See "Logo usage" further
-down for guidance on replacing it and sizing a real logo correctly.
+`title-page-content.tex` rather than hardcoded into the title page
+layout itself (see "Making this your own" above). See "Logo usage"
+further down for how to replace it and size a real logo correctly.
 
 ## Known ordering fix (already applied)
 Quarto's `toc: true` auto-inserts the Table of Contents at a fixed
-template location that lands *before* a custom title page. This
-scaffold disables that (`toc: false`) and places the TOC manually via
-`contents.qmd`, positioned correctly after Preface and before the
-Introduction. If you ever re-enable `toc: true`, this will break
-again — leave it as `false`.
-again — leave it as `false`.
+template location, and that location lands before a custom title
+page. This scaffold turns that off (`toc: false`) and places the TOC
+manually instead, via `contents.qmd`, positioned correctly after the
+Preface and before the Introduction. If you ever re-enable `toc:
+true`, this problem comes right back — leave it as `false`.
 
 ## Front matter / main matter architecture (read before editing)
 This scaffold's page-numbering and chapter-numbering correctness
@@ -310,12 +361,13 @@ mind:
    next one. See `\backmatter` at the end of `chapter-02.qmd`.
 
 ## Parts (grouping chapters under Part I, Part II, ...)
-Neither toolkit uses Parts by default — the example content is a flat
-chapter list — but Quarto's native support for them works cleanly
-with everything else in this scaffold, verified by actually building
-a Parts-based version and checking the numbering, TOC, and headers,
-not just reading Quarto's docs. Add a Part with a `part:` entry in
-`_quarto.yml`'s `chapters:` list:
+Neither toolkit uses Parts by default — the example content is a
+flat chapter list — but Quarto's native support for them works
+cleanly with everything else in this scaffold. That's been checked
+by actually building a Parts-based version and looking at the
+numbering, the TOC, and the running headers, not just reading
+Quarto's own documentation on the feature. To add a Part, use a
+`part:` entry in `_quarto.yml`'s `chapters:` list:
 
 ```yaml
 book:
@@ -335,56 +387,59 @@ book:
     - closing.qmd
 ```
 
-Each `part:` value is a `.qmd` file, typically just a level-one
-Markdown heading (`# Part One: Foundations`) — that heading text
-becomes the part title. A short overview paragraph right after the
-heading works too (see the next bullet below) — it isn't limited to
-heading-only files. (Quarto also accepts a quoted string directly in
-the YAML instead of a file — `part: "Part One: Foundations"` — but a
-file is the more common pattern and what's documented/tested here.)
+Each `part:` value points to a `.qmd` file, typically just a
+level-one Markdown heading (`# Part One: Foundations`) — that
+heading text becomes the part title. A short overview paragraph
+right after the heading works too, so it isn't limited to
+heading-only files (see the next point below). Quarto also accepts a
+quoted string directly in the YAML instead of a file — `part: "Part
+One: Foundations"` — but a file is the more common pattern, and the
+one that's actually been tested here.
 
-What to expect, confirmed by an actual test render:
+Here's what to expect, based on a real test render rather than the
+docs alone:
 - **Part numbering is automatic** — "Part I," "Part II" — and styled
-  to match the rest of the book via the `\titleformat{\part}` block
-  in `preamble.tex` (crimson label, navy title, crimson rule,
-  centered — the same visual language as chapter openings, just
-  larger and on its own divider page). This styling is completely
-  inert if you never use `part:` — safe to leave in place either way.
+  to match the rest of the book through the `\titleformat{\part}`
+  block in `preamble.tex`: crimson label, navy title, crimson rule,
+  centered, the same visual language as a chapter opening, just
+  larger and on its own divider page. This styling does nothing if
+  you never use `part:`, so it's safe to leave in place either way.
 - **A part-overview paragraph lands on the same page as the title,
-  not a separate one.** Standard LaTeX book class always forces a
-  fresh page immediately after a Part title, even with nothing else
-  on it — the classic print convention of a Part as its own bare
+  not a separate one.** The standard LaTeX book class always forces
+  a fresh page right after a Part title, even with nothing else on
+  it — the classic print convention of a Part as its own bare
   "divider" page. That's not what most people expect from a short
-  intro paragraph placed right after a `# Part Title` heading, so
-  `preamble.tex` overrides it: `\titleclass{\part}{top}` (right
-  before the `\titleformat{\part}` block) reclassifies `\part` from
-  titlesec's default "page" class to "top" — the same class
+  intro paragraph sitting right under a `# Part Title` heading, so
+  `preamble.tex` overrides it. `\titleclass{\part}{top}`, placed
+  right before the `\titleformat{\part}` block, reclassifies `\part`
+  from titlesec's default "page" class to "top" — the same class
   `\chapter` uses — which keeps the title starting its own fresh
-  page but stops it from *also* forcing whatever comes after onto a
-  separate page. Note this had to be titlesec's own `\titleclass`
+  page but stops it from also forcing whatever comes after onto a
+  separate one. This had to go through titlesec's own `\titleclass`
   mechanism specifically: titlesec fully replaces LaTeX's `\part`
-  command internally, so the kernel-level fix (redefining
-  `\@endpart`, the traditional way to control this) silently does
-  nothing once titlesec is loaded — worth knowing if you ever go
-  looking at how this works. A heading-only part file is unaffected
-  either way — its first chapter still starts its own fresh page
-  regardless, since `\chapter` forces that independently of `\part`.
-- **Chapter numbers are NOT reset per part** — they continue counting
-  straight through the whole book (Chapter 1, 2, 3... regardless of
-  which part they're in), which is the standard convention for most
-  books. `\thepart` defaults to roman numerals; switch to
-  `\arabic{part}` in the `\titleformat{\part}` block in `preamble.tex`
-  if you want "Part 1, Part 2" instead.
-- **Table of Contents nests correctly automatically** — Part entries
-  appear bold and prominent, with their chapters indented underneath,
-  no extra work needed.
-- **Running headers are unaffected** — inside a chapter's pages, the
-  header still correctly shows that chapter's name (via `\leftmark`),
-  not the part name.
-- **Every other custom mechanism in this scaffold — front/back matter
-  page numbering, the List of Tables/Figures chapters-only gate,
-  landscape pages, citations — is unaffected.** Parts sit at a
-  structural level Quarto handles independently of all of it.
+  command internally, so the more traditional kernel-level fix
+  (redefining `\@endpart`) silently does nothing once titlesec is
+  loaded. Worth knowing if you ever go digging into how this works.
+  A heading-only part file is unaffected either way — its first
+  chapter still starts its own fresh page regardless, since
+  `\chapter` forces that independently of `\part`.
+- **Chapter numbers don't reset per part.** They count straight
+  through the whole book — Chapter 1, 2, 3, and so on, regardless of
+  which part they fall in — which is the standard convention for
+  most books. `\thepart` defaults to roman numerals; switch to
+  `\arabic{part}` in `preamble.tex`'s `\titleformat{\part}` block if
+  you'd rather have "Part 1, Part 2."
+- **The Table of Contents nests correctly on its own.** Part entries
+  show up bold and prominent, with their chapters indented
+  underneath, no extra work needed.
+- **Running headers aren't affected.** Inside a chapter's pages, the
+  header still correctly shows that chapter's name (via
+  `\leftmark`), not the part name.
+- **Every other custom mechanism in this scaffold keeps working as
+  normal** — front/back matter page numbering, the chapters-only
+  gate on the List of Tables/Figures, landscape pages, citations.
+  Parts sit at a structural level Quarto handles independently of
+  all of it.
 
 ## Header / footer
 - Chapter-opening pages show no header — just a page number in the
@@ -706,95 +761,98 @@ it.
   invisible to the List of Figures if not.
 - The List of Figures sits right after the List of Tables in
   `contents.qmd`, same `\@starttoc{lof}` pattern as the other two.
-- **List of Figures (and List of Tables) is chapters-only —
-  enforced automatically, not just by convention.** Pandoc treats
-  any standalone Markdown image with alt text as a captioned figure
-  by default, so a completely ordinary-looking image in a front- or
-  back-matter file (a logo on an "About" page, say) would otherwise
-  silently end up in the List of Figures too — this actually happened
-  during development, from a perfectly normal `![...](...)` image, not
-  a mistake. `preamble.tex`'s "LIST OF FIGURES / LIST OF TABLES —
-  CHAPTERS ONLY" section fixes this at the mechanism level: front-
-  and back-matter files can caption images and tables freely, and
-  they're automatically kept out of both lists — nothing to remember
-  or avoid. (One small cosmetic side effect: a captioned figure/table
-  outside a chapter still shows a numbered "Figure N.N:"/"Table N.N:"
-  prefix on the page itself, since LaTeX's figure/table counters are
-  a single global sequence that doesn't reset between front/main/back
-  matter — just not listed. If that number is undesirable on a
-  specific page, omitting the caption entirely, as before, remains a
-  valid option — see `closing.qmd` for a working captioned example.)
+- **The List of Figures, and the List of Tables, only count what's
+  inside a real chapter — and that's enforced automatically, not
+  just something to remember.** Pandoc treats any standalone
+  Markdown image with alt text as a captioned figure by default, so
+  a completely ordinary-looking image in a front- or back-matter
+  file — a logo on an "About" page, say — would otherwise silently
+  end up in the List of Figures too. That actually happened during
+  development, from a perfectly normal `![...](...)` image, not from
+  a mistake anywhere in the source. The "LIST OF FIGURES / LIST OF
+  TABLES — CHAPTERS ONLY" section in `preamble.tex` fixes this at
+  the mechanism level: front- and back-matter files can caption
+  images and tables freely, and they're automatically kept out of
+  both lists, nothing to avoid on your end. One small cosmetic side
+  effect worth knowing about: a captioned figure or table outside a
+  chapter still shows a numbered "Figure N.N:"/"Table N.N:" prefix on
+  the page itself, since LaTeX's figure and table counters are one
+  global sequence that doesn't reset between front, main, and back
+  matter — it just won't appear in either list. If that number looks
+  wrong on a specific page, leaving the caption off entirely is still
+  a fine option, same as always — see `closing.qmd` for a working
+  captioned example either way.
 
 ## Figure placement (drifting away from its source position)
-Fixed and verified against a real reported case, not just a
-synthetic test. `_quarto.yml` sets `fig-pos: "H"`, which forces every
-figure to render exactly where it appears in the source instead of
-LaTeX's default floating behavior.
+`_quarto.yml` sets `fig-pos: "H"`, which forces every figure to
+render exactly where it appears in the source, instead of LaTeX's
+usual floating behavior.
 
-This needed correcting once already, worth recording so the mistake
-doesn't get repeated: an earlier version of this note claimed `[H]`
-placement was already Quarto's default in this setup, "confirmed by
-inspecting the generated `.tex`." That conclusion was wrong — it came
-from checking only the first few figures in a longer test document,
-which happened to have `[H]`, without checking all of them. A real
-user report with their actual chapter content (a technical book
-chapter with a diagram placed right after a subheading) showed the
-figure landing two subsections later, splitting a sentence across a
-page break. Re-tested properly this time — every figure in an
-8-image stress test, not just the first few — and confirmed Quarto
-does **not** add `[H]` by default: figures use bare `\begin{figure}`,
-subject to normal LaTeX float-queueing, which can legitimately drift
-a figure many paragraphs (even sections) from where it's written.
-`fig-pos: "H"` is what actually closes this, confirmed by re-running
-the exact reported case and watching the figure land back in the
-correct position, immediately below its intended subheading.
+This is worth explaining honestly, because it needed correcting once
+already, and the mistake is worth recording so it doesn't happen
+again. An earlier version of this note claimed `[H]` placement was
+already Quarto's default in this setup. That conclusion came from
+checking only the first few figures in a longer test document, which
+happened to have `[H]` — not from checking all of them, which turned
+out to matter. A real user report, with their actual chapter content
+(a technical book chapter with a diagram placed right after a
+subheading), showed the figure landing two subsections later,
+splitting a sentence across a page break. Testing it properly the
+second time — every figure in an eight-image stress test, not just
+the first few — showed Quarto does *not* add `[H]` by default:
+figures use a bare `\begin{figure}`, subject to normal LaTeX
+float-queueing, which can legitimately push a figure many paragraphs,
+even whole sections, away from where it was written. `fig-pos: "H"`
+is what actually closes that gap — re-running the exact reported case
+with it in place put the figure back where it belonged, right below
+its intended subheading.
 
-One attempted *additional* safety net — automatic `\FloatBarrier`
-insertion at every chapter/section boundary via
-`\usepackage[section]{placeins}`, on top of `[H]` — was tried, found
-to actively corrupt chapter titles (titlesec, which this project uses
-for chapter/section styling, fully replaces LaTeX's own sectioning
+One extra safety net was tried and abandoned: automatic
+`\FloatBarrier` insertion at every chapter and section boundary, via
+`\usepackage[section]{placeins}`, layered on top of `[H]`. It broke
+chapter titles outright — titlesec, which this project uses for
+chapter and section styling, fully replaces LaTeX's own sectioning
 commands, and `placeins`'s automatic hook into `\chapter` isn't
-compatible with that), and was reverted rather than shipped. Not in
-this project; don't reintroduce it without solving that
-incompatibility first. `fig-pos: "H"` alone has been sufficient in
-every case tested.
+compatible with that. It was reverted rather than shipped, and isn't
+part of this project — don't add it back without solving that
+incompatibility first. `fig-pos: "H"` on its own has been enough in
+every case tested so far.
 
 ## Diagrams (Mermaid, Graphviz, and other tools)
 Quarto has native, built-in support for both Mermaid and Graphviz —
 a `` ```{mermaid} `` or `` ```{dot} `` fenced code block right in
 your `.qmd` file, no external tool needed to write the diagram
-syntax. **This toolkit deliberately doesn't use that native support
-for PDF output — use it for HTML if you ever build that, but not
-here.** Verified directly, not assumed from documentation: rendering
-either a Mermaid or a Graphviz code block to PDF requires a headless
-Chrome/Chromium install, and that dependency is genuinely fragile —
-confirmed hitting it directly (`quarto install chromium` failed in
-one real environment due to network restrictions), and it matches a
-long, still-active trail of upstream bugs specific to PDF output —
-diagrams cropped, renders that hang indefinitely, failures specific
-to having more than one diagram in a document. HTML output doesn't
-have these problems; PDF does. For a book/course-material toolkit
-where PDF is the actual deliverable, that's not a dependency worth
-carrying.
+syntax. This toolkit deliberately doesn't use that native support
+for PDF output. Use it for HTML if you ever build that, but not
+here. The reason is concrete, not theoretical: rendering either a
+Mermaid or a Graphviz code block to PDF requires a headless
+Chrome/Chromium install, and that dependency turned out to be
+genuinely fragile — `quarto install chromium` failed outright in one
+real environment because of network restrictions, and it matches a
+long, still-active trail of upstream bugs specific to PDF output:
+diagrams getting cropped, renders that hang indefinitely, failures
+that only show up once a document has more than one diagram in it.
+HTML output doesn't have these problems. PDF does. For a book or
+course-material toolkit where PDF is the actual deliverable, that's
+not a dependency worth carrying.
 
-**The reliable pattern instead: generate the diagram externally,
-export to PNG, embed it as a normal figure** — the same figure
-pipeline already used and proven everywhere else in this toolkit
-(correct placement via `fig-pos: "H"`, correct captioning, correct
-chapters-only List of Figures behavior). Confirmed working
-end-to-end: generated a diagram with `dot`, embedded the PNG with
-plain Markdown image syntax, rendered clean with correct numbering
+The reliable pattern instead is to generate the diagram externally,
+export it to PNG, and embed it as a normal figure — the same figure
+pipeline this toolkit already uses everywhere else, with correct
+placement (`fig-pos: "H"`), correct captioning, and correct
+chapters-only List of Figures behavior. This has been tested end to
+end: generate a diagram with `dot`, embed the PNG with plain
+Markdown image syntax, and it renders cleanly with correct numbering
 and placement.
 
 ```markdown
 ![A governance review process.](figures/review-process.png){#fig-review width="70%"}
 ```
 
-**Export to PNG, not SVG.** Also confirmed directly: LaTeX can't
-embed SVG without an Inkscape conversion step this toolkit doesn't
-install — an SVG image reference fails the render outright. PNG
-works natively with `\includegraphics`, no extra dependency.
+**Export to PNG, not SVG.** LaTeX can't embed SVG without an
+Inkscape conversion step this toolkit doesn't install — an SVG image
+reference fails the render outright. PNG works natively with
+`\includegraphics`, no extra dependency needed.
 
 ### Graphviz — recommended for flowcharts, hierarchies, dependency graphs
 Best for anything that's fundamentally nodes-and-edges without a
@@ -922,50 +980,51 @@ from that heading — nothing else needs to change; every chapter after
 it renumbers itself automatically either way.
 
 ## Citation style
-This toolkit ships with **APA 7th edition** as its default — set via
-`csl: apa.csl` in `_quarto.yml`. The `apa.csl` file (fetched from the
+This toolkit ships with APA 7th edition as its default, set via `csl:
+apa.csl` in `_quarto.yml`. The `apa.csl` file — fetched from the
 official [citation-style-language/styles](https://github.com/citation-style-language/styles)
-project, the same source Zotero pulls from) sits in the project root
-alongside `references.bib`.
+project, the same source Zotero pulls from — sits in the project
+root alongside `references.bib`.
 
-Why APA as the starting default: it's the most widely recognized
-citation convention for professional/practitioner-oriented content
-(business, leadership, technical training) — a reasonable default for
-most course books built on this toolkit — as opposed to Chicago (more
-common in humanities/publishing) or IEEE (specific to engineering/CS
-journals). Confirmed working by rendering and checking the actual
-output, not just assumed from the config: in-text citations use "&"
-between authors and the reference list follows APA's author-date
-structure (`Author, A. A., & Author, B. B. (Year). Title. Source.`),
-both correct APA 7 conventions.
+APA is the starting default because it's the most widely recognized
+citation convention for professional and practitioner-oriented
+content — business, leadership, technical training — which makes it
+a reasonable default for most course books built on this toolkit, as
+opposed to Chicago (more common in humanities publishing) or IEEE
+(specific to engineering and CS journals). This has been checked by
+actually rendering and reading the output, not just trusted from the
+config: in-text citations use "&" between authors, and the reference
+list follows APA's author-date structure (`Author, A. A., & Author,
+B. B. (Year). Title. Source.`), both correct APA 7 conventions.
 
-**To use a different style** (a specific brand or course might want
-its own house style): download the matching `.csl` file from the
-[Zotero Style Repository](https://www.zotero.org/styles) (search by
-name — "Chicago," "IEEE," "Vancouver," etc. — and download the
-"in-text" or "author-date" variant, not "note," unless footnote-style
-citations are specifically wanted), place it in the project root, and
-update `csl:` in `_quarto.yml` to point at it. No other changes
-needed — citation syntax in your chapter files (`@citekey`,
-`[@citekey]`) stays exactly the same regardless of which style is
-active; only the *rendered formatting* changes.
+If a specific brand or course wants its own house style, download
+the matching `.csl` file from the [Zotero Style
+Repository](https://www.zotero.org/styles) — search by name
+("Chicago," "IEEE," "Vancouver," and so on), and download the
+"in-text" or "author-date" variant rather than "note," unless
+footnote-style citations are actually what you want. Drop it in the
+project root and point `csl:` in `_quarto.yml` at it. Nothing else
+needs to change — the citation syntax in your chapter files
+(`@citekey`, `[@citekey]`) stays exactly the same no matter which
+style is active. Only the rendered formatting changes.
 
 ## Citations & bibliography
-- Citation source is `references.bib` (BibTeX format), wired up via
-  the top-level `bibliography:` key in `_quarto.yml`.
+- The citation source is `references.bib` (BibTeX format), wired up
+  through the top-level `bibliography:` key in `_quarto.yml`.
 - Cite with `@citekey` for an inline citation ("as Smith and Jones
   (2021) explain...") or `[@citekey]` for a parenthetical one
   ("...is well established (Smith & Jones, 2021)"). Combine multiple
-  sources in one bracket: `[@key1; @key2]`. This works anywhere in
-  regular Markdown prose — including inside a Markdown table's own
+  sources in one bracket with `[@key1; @key2]`. This works anywhere
+  in regular Markdown prose, including inside a Markdown table's own
   caption — just not inside a raw LaTeX block (see above).
 - Quarto's default behavior is to append the reference list to the
-  very end of the document, wherever that happens to fall — same
-  "wrong position" problem as the Table of Contents. `references.qmd`
-  takes control of this with a `::: {#refs} :::` div, which is where
-  Quarto prints the actual list — placed here as its own back-matter
-  page instead of trusting the default. If you move where citations
-  should compile to, move this div, not the `bibliography:` setting.
+  very end of the document, wherever that happens to land — the same
+  "wrong position" problem the Table of Contents has.
+  `references.qmd` takes control of this with a `::: {#refs} :::`
+  div, which is where Quarto actually prints the list, placed here
+  as its own back-matter page instead of trusting the default. If
+  you ever want citations to compile somewhere else, move this div —
+  not the `bibliography:` setting.
 
 ## First thing to check on your first render
 If Quarto auto-generates a second title page, remove any `title:` /

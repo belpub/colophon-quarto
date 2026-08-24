@@ -1,0 +1,38 @@
+# A Real Appendix
+
+`\giEnableAppendix`, fired at the end of the previous chapter,
+switches numbering from "Chapter 4" to "Appendix A" — automatically,
+with no manual bookkeeping. Notice this chapter's own title has no
+"Appendix A:" baked into it; that label is generated for you, the
+same way "Chapter N" was for every earlier chapter. Writing "Appendix
+A:" directly into the title text here would produce a redundant,
+doubled-up label instead.
+
+```{=latex}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{0.3\linewidth}
+  >{\raggedright\arraybackslash}p{0.6\linewidth}
+@{}}
+\toprule\noalign{}
+\rowcolor{giTableHeaderShade}
+\textbf{Term} & \textbf{Definition} \\
+\midrule\noalign{}
+\endhead
+\cellcolor{giTableFirstColShade}Appendix & A back-matter chapter that's lettered instead of numbered. \\
+\bottomrule
+\caption{\label{tbl-appendix-example}A table inside a real, lettered appendix.}
+\end{longtable}
+```
+
+A book can have several appendices — just add more `.qmd` files to
+`chapters:` after this one; each gets the next letter automatically
+(Appendix B, Appendix C, ...).
+
+```{=latex}
+% \backmatter fires a \clearpage of its own, so — same lesson as
+% \mainmatter/\giEnableMainMatter earlier — it needs to execute
+% BEFORE the next chapter's heading, not after. This file is the
+% last appendix before back matter, so this switch lives at its
+% true end rather than at the top of references.qmd.
+\giEnableBackMatter
+```

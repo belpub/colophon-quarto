@@ -2,30 +2,21 @@
 
 Second chapter content goes here.
 
-Figures work with plain Markdown image syntax — no raw LaTeX needed (unlike captioned tables). Caption placement below the image is Pandoc's normal default here, no override required the way tables needed one.
+Figures work with plain Markdown image syntax — no raw LaTeX needed
+(unlike captioned tables). Caption placement below the image is
+Pandoc's normal default here, no override required the way tables
+needed one.
 
 ![Placeholder logo, used throughout this book's title
 page.](logo-placeholder.png){#fig-logo width="40%"}
 
-As with tables, a `fig-` prefixed label makes a figure cross-referenceable — @fig-logo above resolves automatically to
+As with tables, a `fig-` prefixed label makes a figure
+cross-referenceable — @fig-logo above resolves automatically to
 "Figure 3.1" and stays correct if figures get added or reordered.
 
-To force a page break within a chapter (not needed between chapters — that happens automatically), use:
+To force a page break within a chapter (not needed between chapters —
+that happens automatically), use:
 
 {{< pagebreak >}}
 
 Content after the break starts on a fresh page.
-
-```{=latex}
-% \backmatter fires a \clearpage of its own, so — same lesson as
-% \mainmatter/\giEnableMainMatter earlier — it needs to execute
-% BEFORE the next chapter's heading, not after. Any raw LaTeX
-% Quarto finds before a heading inside a .qmd file gets moved to
-% after it, so this switch lives at the true end of this file
-% (the last chapter before back matter) rather than at the top of
-% closing.qmd. \giEnableBackMatter calls \backmatter and switches
-% page numbering back to roman, continuing from where front matter
-% left off (see \giMarkFrontMatterEnd in contents.qmd) rather than
-% restarting at "i".
-\giEnableBackMatter
-```

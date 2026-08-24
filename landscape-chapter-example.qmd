@@ -1,0 +1,47 @@
+```{=latex}
+\giLandscapeChapterOpener{A Landscape-Only Chapter}
+\begin{landscape}
+\giLandscapeChapterHeader
+```
+
+This whole chapter is landscape, and it starts with no wasted
+portrait page — no bare title sitting alone before the actual
+content begins. Compare this to a normal chapter with an *embedded*
+landscape table (like Chapter 1): here, the chapter title itself
+shows horizontally, as part of the landscape page's own running
+header, instead of on a separate portrait page first.
+
+```{=latex}
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+  >{\raggedright\arraybackslash}p{0.2\linewidth}
+@{}}
+\toprule\noalign{}
+\rowcolor{giTableHeaderShade}
+\textbf{Column A} & \textbf{Column B} & \textbf{Column C} & \textbf{Column D} \\
+\midrule\noalign{}
+\endhead
+\cellcolor{giTableFirstColShade}Row 1 & Data & Data & Data \\
+\bottomrule
+\caption{\label{tbl-landscape-chapter-example}A table inside a landscape-only chapter.}
+\end{longtable}
+```
+
+This is the pattern to reach for whenever a whole chapter's content
+is naturally wide — a large data table, a wide diagram, anything
+that doesn't fit a portrait column at a readable size.
+
+```{=latex}
+\giLandscapeFooter
+\end{landscape}
+```
+
+```{=latex}
+% \giEnableAppendix needs to fire before the NEXT chapter's heading,
+% not after — same "content before a heading gets reordered" rule
+% covered in the README. This file is now the last numbered chapter
+% before the appendix starts, so this switch lives at its true end.
+\giEnableAppendix
+```
